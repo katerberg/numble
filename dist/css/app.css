@@ -1,0 +1,9 @@
+#game {
+  font-size: 1.5em;
+  text-align: center; }
+  #game span {
+    padding: 1em;
+    display: inline-block;
+    cursor: pointer; }
+    #game span:hover {
+      background: #ccc; }
