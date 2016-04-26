@@ -1,23 +1,17 @@
 (function() {
   'use strict';
 
-  angular.module('numbleApp').factory('gameService', function() {
+  angular.module('numbleApp').factory('gameService', function(winService) {
     var selected = [];
 
     function select(item) {
       selected.push(item.display);
       console.log(selected);
-      if (selected.length > 2) {
-        return checkWin();
-      }
+      return winService.check(selected);
     }
 
     function reset() {
       selected.length = 0;
-    }
-
-    function checkWin() {
-      return true;
     }
 
     return {

@@ -1,11 +1,11 @@
-<h1>Play!</h1>
-<h2 ng-if="won">You win!</h2>
+<h1 ng-click="reset()">Play!</h1>
+<h2 ng-click="reset()" ng-if="won">You win!</h2>
 <div id="game">
   <div>
     <span ng-click="num[0][0].select()">{{num[0][0].display}}</span>
-    <span ng-click="num[0][0].select()">{{num[0][1].display}}</span>
-    <span ng-click="num[0][0].select()">{{num[0][2].display}}</span>
-    <span ng-click="num[0][0].select()">{{num[0][3].display}}</span>
+    <span ng-click="num[0][1].select()">{{num[0][1].display}}</span>
+    <span ng-click="num[0][2].select()">{{num[0][2].display}}</span>
+    <span ng-click="num[0][3].select()">{{num[0][3].display}}</span>
   </div>
   <div>
     <span ng-click="num[1][0].select()">{{num[1][0].display}}</span>
