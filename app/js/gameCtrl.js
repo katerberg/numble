@@ -1,10 +1,10 @@
 (function() {
   'use strict';
 
-  angular.module('numbleApp').controller('GameCtrl', function($scope, gameService) {
+  angular.module('numbleApp').controller('GameCtrl', function($scope, stateService) {
     function selectVal(i, j) {
       return function() {
-        gameService.select($scope.num[i][j]);
+        stateService.select($scope.num[i][j]);
       };
     }
     $scope.num = [];
@@ -21,8 +21,8 @@
         };
       }
     }
-    $scope.state = gameService.state;
+    $scope.state = stateService.state;
 
-    $scope.reset = gameService.reset;
+    $scope.reset = stateService.reset;
   });
 })();

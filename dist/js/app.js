@@ -22,10 +22,10 @@
 (function() {
   'use strict';
 
-  angular.module('numbleApp').controller('GameCtrl', ["$scope", "gameService", function($scope, gameService) {
+  angular.module('numbleApp').controller('GameCtrl', ["$scope", "stateService", function($scope, stateService) {
     function selectVal(i, j) {
       return function() {
-        gameService.select($scope.num[i][j]);
+        stateService.select($scope.num[i][j]);
       };
     }
     $scope.num = [];
@@ -42,16 +42,16 @@
         };
       }
     }
-    $scope.state = gameService.state;
+    $scope.state = stateService.state;
 
-    $scope.reset = gameService.reset;
+    $scope.reset = stateService.reset;
   }]);
 })();
 
 (function() {
   'use strict';
 
-  angular.module('numbleApp').factory('gameService', ["winService", function(winService) {
+  angular.module('numbleApp').factory('stateService', ["winService", function(winService) {
     var state = {
       selected: [],
       score: 0

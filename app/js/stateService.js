@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  angular.module('numbleApp').factory('gameService', function(winService) {
+  angular.module('numbleApp').factory('stateService', function(winService) {
     var state = {
       selected: [],
       score: 0
