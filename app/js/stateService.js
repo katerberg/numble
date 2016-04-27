@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  angular.module('numbleApp').factory('stateService', function(winService) {
+  angular.module('numbleApp').factory('stateService', function(winService, selectionService) {
     var state = {
       selected: [],
       score: 0
@@ -11,12 +11,19 @@
       if (item.selected) {
         return;
       }
+      console.log(state.selected);
+      if (state.selected.length > 0 && !selectionService.areTouching(item, state.selected[state.selected.length - 1])) {
+        return;
+      }
       item.selected = true;
       state.selected.push(item);
       var valid = winService.check(state.selected.map(function(val) {
         return val.display;
       }));
-      state.score += valid ? 1 : 0;
+      if (valid) {
+        state.score++;
+        reset();
+      }
     }
 
     function reset() {
