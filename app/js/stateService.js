@@ -4,6 +4,7 @@
   angular.module('numbleApp').factory('stateService', function(winService, selectionService) {
     var state = {
       selected: [],
+      found: [],
       score: 0
     };
 
@@ -16,10 +17,12 @@
       }
       item.selected = true;
       state.selected.push(item);
-      var valid = winService.check(state.selected.map(function(val) {
+      var values = state.selected.map(function(val) {
         return val.display;
-      }));
+      });
+      var valid = winService.check(values);
       if (valid) {
+        state.found.push(values);
         state.score++;
         reset();
       }

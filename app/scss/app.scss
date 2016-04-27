@@ -14,3 +14,11 @@
     }
   }
 }
+ul {
+  &.current li {
+    color: #00c;
+  }
+  &.found li {
+    color: #0c0;
+  }
+}

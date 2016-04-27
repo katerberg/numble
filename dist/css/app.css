@@ -10,3 +10,9 @@
       background: #ccc; }
     #game span.selected {
       background: #c00; }
+
+ul.current li {
+  color: #00c; }
+
+ul.found li {
+  color: #0c0; }
