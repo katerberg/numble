@@ -87,9 +87,15 @@
       var values = state.selected.map(function(val) {
         return val.display;
       });
+      var valuesCombined = values.join(',');
+      if (state.found.some(function(foundVal) {
+        return foundVal === valuesCombined;
+      })) {
+        return;
+      }
       var valid = winService.check(values);
       if (valid) {
-        state.found.push(values);
+        state.found.push(values.join(','));
         state.score++;
         reset();
       }
