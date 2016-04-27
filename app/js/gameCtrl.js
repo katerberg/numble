@@ -4,9 +4,7 @@
   angular.module('numbleApp').controller('GameCtrl', function($scope, gameService) {
     function selectVal(i, j) {
       return function() {
-        if (gameService.select($scope.num[i][j])) {
-          $scope.won = true;
-        }
+        gameService.select($scope.num[i][j]);
       };
     }
     $scope.num = [];
@@ -21,10 +19,8 @@
         };
       }
     }
+    $scope.state = gameService.state;
 
-    $scope.reset = function reset() {
-      gameService.reset();
-      $scope.won = false;
-    };
+    $scope.reset = gameService.reset;
   });
 })();

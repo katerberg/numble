@@ -2,21 +2,24 @@
   'use strict';
 
   angular.module('numbleApp').factory('gameService', function(winService) {
-    var selected = [];
+    var state = {
+      selected: [],
+      score: 0
+    };
 
     function select(item) {
-      selected.push(item.display);
-      console.log(selected);
-      return winService.check(selected);
+      state.selected.push(item.display);
+      state.score += winService.check(state.selected) ? 1 : 0;
     }
 
     function reset() {
-      selected.length = 0;
+      state.selected.length = 0;
     }
 
     return {
       select: select,
-      reset: reset
+      reset: reset,
+      state: state
     };
   });
 })();

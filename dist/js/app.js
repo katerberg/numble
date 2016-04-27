@@ -25,9 +25,7 @@
   angular.module('numbleApp').controller('GameCtrl', ["$scope", "gameService", function($scope, gameService) {
     function selectVal(i, j) {
       return function() {
-        if (gameService.select($scope.num[i][j])) {
-          $scope.won = true;
-        }
+        gameService.select($scope.num[i][j]);
       };
     }
     $scope.num = [];
@@ -42,11 +40,9 @@
         };
       }
     }
+    $scope.state = gameService.state;
 
-    $scope.reset = function reset() {
-      gameService.reset();
-      $scope.won = false;
-    };
+    $scope.reset = gameService.reset;
   }]);
 })();
 
@@ -54,21 +50,24 @@
   'use strict';
 
   angular.module('numbleApp').factory('gameService', ["winService", function(winService) {
-    var selected = [];
+    var state = {
+      selected: [],
+      score: 0
+    };
 
     function select(item) {
-      selected.push(item.display);
-      console.log(selected);
-      return winService.check(selected);
+      state.selected.push(item.display);
+      state.score += winService.check(state.selected) ? 1 : 0;
     }
 
     function reset() {
-      selected.length = 0;
+      state.selected.length = 0;
     }
 
     return {
       select: select,
-      reset: reset
+      reset: reset,
+      state: state
     };
   }]);
 })();
@@ -78,9 +77,15 @@
 
   angular.module('numbleApp').factory('winService', function() {
     function check(selected) {
-      if (selected.length !== 3) {
-        return false;
+      switch (selected.length) {
+        case 3:
+          return checkForThree(selected);
+        default:
+          return false;
       }
+    }
+
+    function checkForThree(selected) {
       return selected[0] + selected[1] === selected[2] ||
         selected[0] * selected[1] === selected[2];
     }

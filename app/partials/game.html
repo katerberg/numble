@@ -1,5 +1,5 @@
 <h1 ng-click="reset()">Play!</h1>
-<h2 ng-click="reset()" ng-if="won">You win!</h2>
+<h2 ng-click="reset()">Score: {{state.score}}</h2>
 <div id="game">
   <div>
     <span ng-click="num[0][0].select()">{{num[0][0].display}}</span>
@@ -26,3 +26,4 @@
     <span ng-click="num[3][3].select()">{{num[3][3].display}}</span>
   </div>
 </div>
+<ul><li ng-repeat="chosen in state.selected track by $index">{{chosen}}</li></ul>
