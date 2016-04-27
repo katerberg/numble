@@ -14,6 +14,8 @@
         var myI = i;
         var myJ = j;
         $scope.num[i][j] = {
+          x: i,
+          y: j,
           display: Math.floor(Math.random() * 10),
           select: selectVal(i, j)
         };

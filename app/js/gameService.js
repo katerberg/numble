@@ -8,6 +8,7 @@
     };
 
     function select(item) {
+      item.selected = true;
       state.selected.push(item);
       var valid = winService.check(state.selected.map(function(val) {
         return val.display;
@@ -16,6 +17,9 @@
     }
 
     function reset() {
+      state.selected.forEach(function(item) {
+        item.selected = false;
+      });
       state.selected.length = 0;
     }
 

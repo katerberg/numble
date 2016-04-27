@@ -35,6 +35,8 @@
         var myI = i;
         var myJ = j;
         $scope.num[i][j] = {
+          x: i,
+          y: j,
           display: Math.floor(Math.random() * 10),
           select: selectVal(i, j)
         };
@@ -56,6 +58,7 @@
     };
 
     function select(item) {
+      item.selected = true;
       state.selected.push(item);
       var valid = winService.check(state.selected.map(function(val) {
         return val.display;
@@ -64,6 +67,9 @@
     }
 
     function reset() {
+      state.selected.forEach(function(item) {
+        item.selected = false;
+      });
       state.selected.length = 0;
     }
 
