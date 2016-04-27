@@ -11,7 +11,6 @@
       if (item.selected) {
         return;
       }
-      console.log(state.selected);
       if (state.selected.length > 0 && !selectionService.areTouching(item, state.selected[state.selected.length - 1])) {
         return;
       }
