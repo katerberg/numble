@@ -8,6 +8,9 @@
     };
 
     function select(item) {
+      if (item.selected) {
+        return;
+      }
       item.selected = true;
       state.selected.push(item);
       var valid = winService.check(state.selected.map(function(val) {

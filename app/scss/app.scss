@@ -5,8 +5,12 @@
     padding: 1em;
     display: inline-block;
     cursor: pointer;
+    border-radius: 6px;
     &:hover {
       background: #ccc;
+    }
+    &.selected {
+      background: #c00;
     }
   }
 }

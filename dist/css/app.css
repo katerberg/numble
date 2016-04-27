@@ -4,6 +4,9 @@
   #game span {
     padding: 1em;
     display: inline-block;
-    cursor: pointer; }
+    cursor: pointer;
+    border-radius: 6px; }
     #game span:hover {
       background: #ccc; }
+    #game span.selected {
+      background: #c00; }
