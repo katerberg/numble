@@ -56,8 +56,11 @@
     };
 
     function select(item) {
-      state.selected.push(item.display);
-      state.score += winService.check(state.selected) ? 1 : 0;
+      state.selected.push(item);
+      var valid = winService.check(state.selected.map(function(val) {
+        return val.display;
+      }));
+      state.score += valid ? 1 : 0;
     }
 
     function reset() {
