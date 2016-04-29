@@ -87,13 +87,13 @@
       var values = state.selected.map(function(val) {
         return val.display;
       });
-      var valuesCombined = values.join(',');
-      if (state.found.some(function(foundVal) {return foundVal === valuesCombined;})) {
-        return;
-      }
       var valid = winService.check(values);
-      if (valid) {
-        state.found.push(values.join(','));
+      var combined = state.found.concat(valid);
+      if (combined.length > state.found.length) {
+        state.found.length = 0;
+        combined.forEach(function(val) {
+          state.found.push(val);
+        });
         state.score++;
         reset();
       }
@@ -118,14 +118,17 @@
   'use strict';
 
   angular.module('numbleApp').factory('winService', function() {
-    function isValid(one, two, result) {
-      return one + two === result ||
-        one * two === result;
+    function isAddable(one, two, result) {
+      return one + two === result;
+    }
+    function isMultiplicable(one, two, result) {
+      return one * two === result;
     }
 
     function checkForN(selected) {
       var len = selected.length,
         max = len - 1;
+      var answers = [];
       for (var n = 1; n < max; n++) { // end of first number
         for (var i = max - n; i > 0; i--) { // end of second number
           var firstNum, secondNum, thirdNum;
@@ -139,17 +142,19 @@
           for (var third = i + n; third < len; third++) {
             thirdNum += selected[third] * Math.pow(10, len - third - 1);
           }
-          if (isValid(firstNum, secondNum, thirdNum)) {
-            return true;
+          if (isAddable(firstNum, secondNum, thirdNum)) {
+            answers.push(firstNum + '+' + secondNum + '=' + thirdNum);
+          }
+          if (isMultiplicable(firstNum, secondNum, thirdNum)) {
+            answers.push(firstNum + '*' + secondNum + '=' + thirdNum);
           }
         }
       }
-      return false;
+      return answers;
     }
 
     return {
       check: checkForN,
-      checkForN: checkForN
     };
   });
 })();
