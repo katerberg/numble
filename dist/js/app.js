@@ -120,67 +120,37 @@
   'use strict';
 
   angular.module('numbleApp').factory('winService', function() {
-    function check(selected) {
-      switch (selected.length) {
-        case 3:
-          return checkForThree(selected);
-        case 5:
-          return checkForFive(selected);
-        default:
-          return false;
-      }
-    }
     function isValid(one, two, result) {
       return one + two === result ||
         one * two === result;
     }
 
-    function checkForThree(selected) {
-      return isValid(selected[0], selected[1], selected[2]);
-    }
-
     function checkForN(selected) {
       var len = selected.length,
         max = len - 1;
-      console.log('pattern = ' + selected.join(','));
-      console.log('len = ' + len);
-      for (var n = 1; n < max; n++) {
-        for (var i = max - n; i > 0; i--) {
-          if (n === 3) { //BAD
-            var descrip = n + '' + (len - i - n) + i;
-            var firstNum = 0;
-            for (var first = n - 1; first > 0; first--) {
-              console.log(first);
-              console.log('sel ' + selected[n -first]);
-              console.log('mult  ' + Math.pow(10, (n - 1 - first)));
-              firstNum += selected[n - first] * 10^(n-(n - first));
-            }
-            console.log(descrip);
-            console.log('firstnum = ' + firstNum);
+      for (var n = 1; n < max; n++) { // end of first number
+        for (var i = max - n; i > 0; i--) { // end of second number
+          var firstNum, secondNum, thirdNum;
+          firstNum = secondNum = thirdNum = 0;
+          for (var first = n - 1; first >= 0; first--) {
+            firstNum += selected[n - first - 1] * Math.pow(10, first);
+          }
+          for (var second = i - 1; second >= 0; second--) {
+            secondNum += selected[i - second - 1 + n] * Math.pow(10, second);
+          }
+          for (var third = i + n; third < len; third++) {
+            thirdNum += selected[third] * Math.pow(10, len - third - 1);
+          }
+          if (isValid(firstNum, secondNum, thirdNum)) {
+            return true;
           }
         }
       }
-    }
-
-    function checkForFive(selected) {
-      checkForN(selected);
-      var OneThreeOne = isValid(selected[0],
-          selected[1] * 100 + selected[2] * 10 + selected[3],
-          selected[4]);
-      var ThreeOneOne = isValid(selected[0] * 100 + selected[1] * 10 + selected[2],
-          selected[3],
-          selected[4]);
-      var TwoOneTwo = isValid(selected[0] * 10 + selected[1],
-          selected[2],
-          selected[3] * 10 + selected[4]);
-      var OneTwoTwo = isValid(selected[0],
-          selected[1] * 10 + selected[2],
-          selected[3] * 10 + selected[4]);
-      return TwoOneTwo || OneTwoTwo || ThreeOneOne || OneThreeOne;
+      return false;
     }
 
     return {
-      check: check,
+      check: checkForN,
       checkForN: checkForN
     };
   });
