@@ -97,12 +97,12 @@
       valid.forEach(function(val) {
         if (state.found.indexOf(val) === -1) {
           state.found.push(val);
-          state.score++;
+          state.score += winService.getScore(val);
           stateService.reset();
         }
       });
     }
-    timeService.startTimer(30);
+    timeService.startTimer(60);
     $scope.num = boardService.getBoard(selectVal);
     $scope.state = stateService.state;
     $scope.time = timeService.getTime;
@@ -233,8 +233,24 @@
       return answers;
     }
 
+    function getScore(number) {
+      var n = number.length - 2;
+      if (n <= 1) {
+        return n;
+      }
+      var fibo = 1;
+      var fiboPrev = 0;
+      for (var i = 2; i < n; i++) {
+        var temp = fibo;
+        fibo += fiboPrev;
+        fiboPrev = temp;
+      }
+      return fibo;
+    }
+
     return {
       check: checkForN,
+      getScore: getScore
     };
   });
 })();

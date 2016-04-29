@@ -37,8 +37,24 @@
       return answers;
     }
 
+    function getScore(number) {
+      var n = number.length - 2;
+      if (n <= 1) {
+        return n;
+      }
+      var fibo = 1;
+      var fiboPrev = 0;
+      for (var i = 2; i < n; i++) {
+        var temp = fibo;
+        fibo += fiboPrev;
+        fiboPrev = temp;
+      }
+      return fibo;
+    }
+
     return {
       check: checkForN,
+      getScore: getScore
     };
   });
 })();

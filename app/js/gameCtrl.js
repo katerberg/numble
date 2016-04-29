@@ -27,12 +27,12 @@
       valid.forEach(function(val) {
         if (state.found.indexOf(val) === -1) {
           state.found.push(val);
-          state.score++;
+          state.score += winService.getScore(val);
           stateService.reset();
         }
       });
     }
-    timeService.startTimer(30);
+    timeService.startTimer(60);
     $scope.num = boardService.getBoard(selectVal);
     $scope.state = stateService.state;
     $scope.time = timeService.getTime;
