@@ -102,6 +102,9 @@
         }
       });
     }
+    timeService.setAlert(function() {
+      alert('Game Finished. You scored ' + stateService.state.score + ' points.');
+    });
     timeService.startTimer(60);
     $scope.num = boardService.getBoard(selectVal);
     $scope.state = stateService.state;
