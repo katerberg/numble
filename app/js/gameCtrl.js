@@ -4,6 +4,7 @@
   angular.module('numbleApp').controller('GameCtrl', function($scope,
         stateService,
         boardService,
+        timeService,
         selectionService,
         winService) {
     function selectVal(i, j) {
@@ -31,9 +32,10 @@
         }
       });
     }
+    timeService.startTimer(30);
     $scope.num = boardService.getBoard(selectVal);
     $scope.state = stateService.state;
-
+    $scope.time = timeService.getTime;
     $scope.reset = stateService.reset;
   });
 })();
