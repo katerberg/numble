@@ -88,9 +88,7 @@
         return val.display;
       });
       var valuesCombined = values.join(',');
-      if (state.found.some(function(foundVal) {
-        return foundVal === valuesCombined;
-      })) {
+      if (state.found.some(function(foundVal) {return foundVal === valuesCombined;})) {
         return;
       }
       var valid = winService.check(values);
