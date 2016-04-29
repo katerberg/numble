@@ -124,18 +124,64 @@
       switch (selected.length) {
         case 3:
           return checkForThree(selected);
+        case 5:
+          return checkForFive(selected);
         default:
           return false;
       }
     }
+    function isValid(one, two, result) {
+      return one + two === result ||
+        one * two === result;
+    }
 
     function checkForThree(selected) {
-      return selected[0] + selected[1] === selected[2] ||
-        selected[0] * selected[1] === selected[2];
+      return isValid(selected[0], selected[1], selected[2]);
+    }
+
+    function checkForN(selected) {
+      var len = selected.length,
+        max = len - 1;
+      console.log('pattern = ' + selected.join(','));
+      console.log('len = ' + len);
+      for (var n = 1; n < max; n++) {
+        for (var i = max - n; i > 0; i--) {
+          if (n === 3) { //BAD
+            var descrip = n + '' + (len - i - n) + i;
+            var firstNum = 0;
+            for (var first = n - 1; first > 0; first--) {
+              console.log(first);
+              console.log('sel ' + selected[n -first]);
+              console.log('mult  ' + Math.pow(10, (n - 1 - first)));
+              firstNum += selected[n - first] * 10^(n-(n - first));
+            }
+            console.log(descrip);
+            console.log('firstnum = ' + firstNum);
+          }
+        }
+      }
+    }
+
+    function checkForFive(selected) {
+      checkForN(selected);
+      var OneThreeOne = isValid(selected[0],
+          selected[1] * 100 + selected[2] * 10 + selected[3],
+          selected[4]);
+      var ThreeOneOne = isValid(selected[0] * 100 + selected[1] * 10 + selected[2],
+          selected[3],
+          selected[4]);
+      var TwoOneTwo = isValid(selected[0] * 10 + selected[1],
+          selected[2],
+          selected[3] * 10 + selected[4]);
+      var OneTwoTwo = isValid(selected[0],
+          selected[1] * 10 + selected[2],
+          selected[3] * 10 + selected[4]);
+      return TwoOneTwo || OneTwoTwo || ThreeOneOne || OneThreeOne;
     }
 
     return {
-      check: check
+      check: check,
+      checkForN: checkForN
     };
   });
 })();
