@@ -30,6 +30,7 @@
       }
       return maybe;
     }
+
     function getBoard(callback) {
       var num = [];
       var exclude = [];
@@ -53,8 +54,15 @@
       return num;
     }
 
+    function areTouching(firstItem, secondItem) {
+      var xDistance = Math.abs(firstItem.x - secondItem.x);
+      var yDistance = Math.abs(firstItem.y - secondItem.y);
+      return xDistance <= 1 && yDistance <= 1;
+    }
+
     return {
-      getBoard: getBoard
+      getBoard: getBoard,
+      areTouching: areTouching
     };
   });
 })();
@@ -63,11 +71,35 @@
 (function() {
   'use strict';
 
-  angular.module('numbleApp').controller('GameCtrl', ["$scope", "stateService", "boardService", function($scope, stateService, boardService) {
+  angular.module('numbleApp').controller('GameCtrl', ["$scope", "stateService", "boardService", "selectionService", "winService", function($scope,
+        stateService,
+        boardService,
+        selectionService,
+        winService) {
     function selectVal(i, j) {
       return function() {
-        stateService.select($scope.num[i][j]);
+        select($scope.num[i][j]);
       };
+    }
+
+    function select(item) {
+      var state = stateService.state;
+      if (!selectionService.isValidMove(item, state.selected)) {
+        return;
+      }
+      item.selected = true;
+      state.selected.push(item);
+      var values = state.selected.map(function(val) {
+        return val.display;
+      });
+      var valid = winService.check(values);
+      valid.forEach(function(val) {
+        if (state.found.indexOf(val) === -1) {
+          state.found.push(val);
+          state.score++;
+          stateService.reset();
+        }
+      });
     }
     $scope.num = boardService.getBoard(selectVal);
     $scope.state = stateService.state;
@@ -79,53 +111,33 @@
 (function() {
   'use strict';
 
-  angular.module('numbleApp').factory('selectionService', function() {
-    function areTouching(firstItem, secondItem) {
-      var xDistance = Math.abs(firstItem.x - secondItem.x);
-      var yDistance = Math.abs(firstItem.y - secondItem.y);
-      return xDistance <= 1 && yDistance <= 1;
+  angular.module('numbleApp').factory('selectionService', ["boardService", function(boardService) {
+    function isValidMove(item, selected) {
+      if (item.selected) {
+        return false;
+      }
+      if (selected.length > 0 && !boardService.areTouching(item, selected[selected.length - 1])) {
+        return false;
+      }
+      return true;
     }
 
     return {
-      areTouching: areTouching
+      isValidMove: isValidMove
     };
-  });
+  }]);
 })();
 
 
 (function() {
   'use strict';
 
-  angular.module('numbleApp').factory('stateService', ["winService", "selectionService", function(winService, selectionService) {
+  angular.module('numbleApp').factory('stateService', function() {
     var state = {
       selected: [],
       found: [],
       score: 0
     };
-
-    function select(item) {
-      if (item.selected) {
-        return;
-      }
-      if (state.selected.length > 0 && !selectionService.areTouching(item, state.selected[state.selected.length - 1])) {
-        return;
-      }
-      item.selected = true;
-      state.selected.push(item);
-      var values = state.selected.map(function(val) {
-        return val.display;
-      });
-      var valid = winService.check(values);
-      var combined = state.found.concat(valid);
-      if (combined.length > state.found.length) {
-        state.found.length = 0;
-        combined.forEach(function(val) {
-          state.found.push(val);
-        });
-        state.score++;
-        reset();
-      }
-    }
 
     function reset() {
       state.selected.forEach(function(item) {
@@ -135,11 +147,10 @@
     }
 
     return {
-      select: select,
       reset: reset,
       state: state
     };
-  }]);
+  });
 })();
 
 (function() {

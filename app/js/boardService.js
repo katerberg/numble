@@ -9,6 +9,7 @@
       }
       return maybe;
     }
+
     function getBoard(callback) {
       var num = [];
       var exclude = [];
@@ -32,8 +33,15 @@
       return num;
     }
 
+    function areTouching(firstItem, secondItem) {
+      var xDistance = Math.abs(firstItem.x - secondItem.x);
+      var yDistance = Math.abs(firstItem.y - secondItem.y);
+      return xDistance <= 1 && yDistance <= 1;
+    }
+
     return {
-      getBoard: getBoard
+      getBoard: getBoard,
+      areTouching: areTouching
     };
   });
 })();

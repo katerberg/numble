@@ -1,59 +1,45 @@
 describe('selectionService', function() {
 
   var instance,
-  rootScope;
+  boardService;
 
   beforeEach(module('numbleApp'));
 
-  beforeEach(inject(function(selectionService) {
+  beforeEach(inject(function(selectionService, _boardService_) {
     instance = selectionService;
+    boardService = _boardService_;
   }));
 
   it('instantiates', function() {
     expect(instance).toBeDefined();
   });
-
-  describe('#areTouching()', function() {
-    var first, second;
+  describe('#isValidMove()', function() {
     beforeEach(function() {
-      first = {};
-      second = {};
+      spyOn(boardService, 'areTouching');
     });
 
-    it('is true if items are horizontally next', function() {
-      first.x = 2;
-      first.y = 0;
-      second.x = 1;
-      second.y = 0;
+    it('is false when item is already selected', function() {
+      var input = {selected: true};
+      boardService.areTouching.and.returnValue(true);
 
-      expect(instance.areTouching(first, second)).toBeTruthy();
+      expect(instance.isValidMove(input, [{}])).toBeFalsy();
     });
 
-    it('is true if items are vertically next', function() {
-      first.x = 1;
-      first.y = 2;
-      second.x = 1;
-      second.y = 3;
+    it('is false when item is not touching previous value', function() {
+      var input = {another: Math.random()},
+        previous = {some: Math.random()};
+      boardService.areTouching.and.returnValue(false);
 
-      expect(instance.areTouching(first, second)).toBeTruthy();
+      expect(instance.isValidMove(input, [{}, previous])).toBeFalsy();
+
+      expect(boardService.areTouching).toHaveBeenCalledWith(input, previous);
     });
 
-    it('is true if items are diagonal', function() {
-      first.x = 0;
-      first.y = 1;
-      second.x = 1;
-      second.y = 2;
+    it('is true when item is unselected and touching previous value', function() {
+      var input = {};
+      boardService.areTouching.and.returnValue(true);
 
-      expect(instance.areTouching(first, second)).toBeTruthy();
-    });
-
-    it('is false if items are away from each other', function() {
-      first.x = 0;
-      first.y = 0;
-      second.x = 1;
-      second.y = 2;
-
-      expect(instance.areTouching(first, second)).toBeFalsy();
+      expect(instance.isValidMove(input, [{}])).toBeTruthy();
     });
   });
 });

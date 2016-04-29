@@ -1,15 +1,19 @@
 (function() {
   'use strict';
 
-  angular.module('numbleApp').factory('selectionService', function() {
-    function areTouching(firstItem, secondItem) {
-      var xDistance = Math.abs(firstItem.x - secondItem.x);
-      var yDistance = Math.abs(firstItem.y - secondItem.y);
-      return xDistance <= 1 && yDistance <= 1;
+  angular.module('numbleApp').factory('selectionService', function(boardService) {
+    function isValidMove(item, selected) {
+      if (item.selected) {
+        return false;
+      }
+      if (selected.length > 0 && !boardService.areTouching(item, selected[selected.length - 1])) {
+        return false;
+      }
+      return true;
     }
 
     return {
-      areTouching: areTouching
+      isValidMove: isValidMove
     };
   });
 })();
