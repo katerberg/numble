@@ -46,7 +46,8 @@ gulp.task('dependency', function() {
     return gulp.src([
       'node_modules/angular/angular.min.js',
       'node_modules/angular-resource/angular-resource.min.js',
-      'node_modules/angular-route/angular-route.min.js'
+      'node_modules/angular-route/angular-route.min.js',
+      'node_modules/fastclick/lib/fastclick.js'
     ])
     .pipe(gulp.dest('dist/js'));
         
