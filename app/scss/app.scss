@@ -1,4 +1,4 @@
-#game {
+#board {
   font-size: 1.5em;
   text-align: center;
   span {
@@ -15,6 +15,12 @@
     }
   }
 }
+body {
+  text-align: center;
+}
+header {
+  text-align: left;
+}
 ul {
   &.current li {
     color: #00c;
@@ -22,4 +28,12 @@ ul {
   &.found li {
     color: #0c0;
   }
+}
+button.undo {
+  width: calc(6em + 96px);
+  background-color: tomato;
+  border: none;
+  border-radius: 4px;
+  font-size: 1.8em;
+  margin-top: 1em;
 }
