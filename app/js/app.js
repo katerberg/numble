@@ -10,6 +10,10 @@
 
     $routeProvider.
       when('/', {
+        templateUrl: 'partials/start.html',
+        controller: 'StartCtrl'
+      }).
+      when('/play', {
         templateUrl: 'partials/game.html',
         controller: 'GameCtrl'
       }).

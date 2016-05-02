@@ -1,0 +1,39 @@
+#game {
+  text-align: center;
+  header {
+    text-align: left;
+  }
+  #board {
+    font-size: 1.5em;
+    text-align: center;
+    span {
+      padding: 1em;
+      display: inline-block;
+      cursor: pointer;
+      border-radius: 6px;
+      border: 1px solid #eee;
+      &:hover {
+        background: #ccc;
+      }
+      &.selected {
+        background: #c00;
+      }
+    }
+  }
+  ul {
+    &.current li {
+      color: #00c;
+    }
+    &.found li {
+      color: #0c0;
+    }
+  }
+  button.undo {
+    width: calc(6em + 96px);
+    background-color: tomato;
+    border: none;
+    border-radius: 4px;
+    font-size: 1.8em;
+    margin-top: 1em;
+  }
+}

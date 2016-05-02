@@ -10,6 +10,10 @@
 
     $routeProvider.
       when('/', {
+        templateUrl: 'partials/start.html',
+        controller: 'StartCtrl'
+      }).
+      when('/play', {
         templateUrl: 'partials/game.html',
         controller: 'GameCtrl'
       }).
@@ -133,6 +137,18 @@
   }]);
 })();
 
+
+(function() {
+  'use strict';
+
+  angular.module('numbleApp').controller('StartCtrl', ["$scope", "$location", function($scope, $location) {
+    function start() {
+      $location.url('/play');
+    }
+
+    $scope.start = start;
+  }]);
+})();
 
 (function() {
   'use strict';
