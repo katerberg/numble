@@ -4,23 +4,6 @@
   var numbleApp = angular.module('numbleApp', [
       'ngRoute'
   ]);
-
-  numbleApp.config(["$routeProvider", "$httpProvider", function($routeProvider, $httpProvider) {
-    $httpProvider.defaults.cache = true;
-
-    $routeProvider.
-      when('/', {
-        templateUrl: 'partials/start.html',
-        controller: 'StartCtrl'
-      }).
-      when('/play', {
-        templateUrl: 'partials/game.html',
-        controller: 'GameCtrl'
-      }).
-    otherwise({
-      redirectTo: '/'
-    });
-  }]);
 })();
 
 (function() {
@@ -114,6 +97,31 @@
     $scope.state = stateService.state;
     $scope.time = timeService.getTime;
     $scope.undo = stateService.undo;
+  }]);
+})();
+
+(function() {
+  'use strict';
+
+  angular.module('numbleApp').controller('ResultsCtrl', ["$scope", function($scope) {
+  }]);
+})();
+
+(function() {
+  'use strict';
+  angular.module('numbleApp').config(["$routeProvider", "$httpProvider", function($routeProvider, $httpProvider) {
+    $routeProvider.
+      when('/', {
+        templateUrl: 'partials/start.html',
+        controller: 'StartCtrl'
+      }).
+    when('/play', {
+      templateUrl: 'partials/game.html',
+      controller: 'GameCtrl'
+    }).
+    otherwise({
+      redirectTo: '/'
+    });
   }]);
 })();
 
