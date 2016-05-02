@@ -2,6 +2,7 @@
   'use strict';
 
   angular.module('numbleApp').controller('GameCtrl', function($scope,
+        $location,
         stateService,
         boardService,
         timeService,
@@ -33,7 +34,7 @@
       });
     }
     timeService.setAlert(function() {
-      alert('Game Finished. You scored ' + stateService.state.score + ' points.');
+      $location.url('/results');
     });
     timeService.startTimer(60);
     $scope.num = boardService.getBoard(selectVal);

@@ -58,7 +58,8 @@
 (function() {
   'use strict';
 
-  angular.module('numbleApp').controller('GameCtrl', ["$scope", "stateService", "boardService", "timeService", "selectionService", "winService", function($scope,
+  angular.module('numbleApp').controller('GameCtrl', ["$scope", "$location", "stateService", "boardService", "timeService", "selectionService", "winService", function($scope,
+        $location,
         stateService,
         boardService,
         timeService,
@@ -90,7 +91,7 @@
       });
     }
     timeService.setAlert(function() {
-      alert('Game Finished. You scored ' + stateService.state.score + ' points.');
+      $location.url('/results');
     });
     timeService.startTimer(60);
     $scope.num = boardService.getBoard(selectVal);
@@ -103,7 +104,13 @@
 (function() {
   'use strict';
 
-  angular.module('numbleApp').controller('ResultsCtrl', ["$scope", function($scope) {
+  angular.module('numbleApp').controller('ResultsCtrl', ["$scope", "stateService", "$location", function($scope, stateService, $location) {
+    function startOver() {
+      stateService.reset();
+      $location.url('/play');
+    }
+    $scope.score = stateService.state.score;
+    $scope.startOver = startOver;
   }]);
 })();
 
@@ -118,6 +125,10 @@
     when('/play', {
       templateUrl: 'partials/game.html',
       controller: 'GameCtrl'
+    }).
+    when('/results', {
+      templateUrl: 'partials/results.html',
+      controller: 'ResultsCtrl'
     }).
     otherwise({
       redirectTo: '/'
@@ -175,8 +186,15 @@
       state.selected.length = 0;
     }
 
+    function reset() {
+      undo();
+      state.found.length = 0;
+      state.score = 0;
+    }
+
     return {
       undo: undo,
+      reset: reset,
       state: state
     };
   });

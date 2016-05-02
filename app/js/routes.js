@@ -10,6 +10,10 @@
       templateUrl: 'partials/game.html',
       controller: 'GameCtrl'
     }).
+    when('/results', {
+      templateUrl: 'partials/results.html',
+      controller: 'ResultsCtrl'
+    }).
     otherwise({
       redirectTo: '/'
     });

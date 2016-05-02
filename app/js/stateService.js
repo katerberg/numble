@@ -15,8 +15,15 @@
       state.selected.length = 0;
     }
 
+    function reset() {
+      undo();
+      state.found.length = 0;
+      state.score = 0;
+    }
+
     return {
       undo: undo,
+      reset: reset,
       state: state
     };
   });
