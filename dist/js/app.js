@@ -98,7 +98,7 @@
         if (state.found.indexOf(val) === -1) {
           state.found.push(val);
           state.score += winService.getScore(val);
-          stateService.reset();
+          stateService.undo();
         }
       });
     }
@@ -109,7 +109,7 @@
     $scope.num = boardService.getBoard(selectVal);
     $scope.state = stateService.state;
     $scope.time = timeService.getTime;
-    $scope.reset = stateService.reset;
+    $scope.undo = stateService.undo;
   }]);
 })();
 
@@ -144,7 +144,7 @@
       score: 0
     };
 
-    function reset() {
+    function undo() {
       state.selected.forEach(function(item) {
         item.selected = false;
       });
@@ -152,7 +152,7 @@
     }
 
     return {
-      reset: reset,
+      undo: undo,
       state: state
     };
   });

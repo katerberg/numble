@@ -8,7 +8,7 @@
       score: 0
     };
 
-    function reset() {
+    function undo() {
       state.selected.forEach(function(item) {
         item.selected = false;
       });
@@ -16,7 +16,7 @@
     }
 
     return {
-      reset: reset,
+      undo: undo,
       state: state
     };
   });
