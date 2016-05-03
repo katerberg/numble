@@ -11,6 +11,4 @@
     </div>
   </div>
   <button hm-tap="undo()" ng-if="state.selected.length > 0" class="undo">Undo</button>
-  <ul class="current"><li ng-repeat="chosen in state.selected track by $index">{{chosen.display}}</li></ul>
-  <ul class="found"><li ng-repeat="item in state.found track by $index">{{item}}</li></ul>
 </div>
