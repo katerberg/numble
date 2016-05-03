@@ -22,9 +22,9 @@
     function getBoard(callback) {
       var num = [];
       var exclude = [];
-      for (var i = 0; i <= 3; i++) {
+      for (var i = 0; i <= 4; i++) {
         num.push([]);
-        for (var j = 0; j <= 3; j++) {
+        for (var j = 0; j <= 4; j++) {
           var myI = i;
           var myJ = j;
           var value = getRandomInt(exclude);
