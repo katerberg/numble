@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  angular.module('numbleApp').config(function($routeProvider, $httpProvider) {
+  angular.module('numbleApp').config(function($routeProvider) {
     $routeProvider.
       when('/', {
         templateUrl: 'partials/start.html',

@@ -2,7 +2,8 @@
   'use strict';
 
   var numbleApp = angular.module('numbleApp', [
-      'ngRoute'
+      'ngRoute',
+      'angular-gestures'
   ]);
 })();
 
@@ -103,6 +104,16 @@
 
 (function() {
   'use strict';
+  angular.module('numbleApp').config(["hammerDefaultOptsProvider", function(hammerDefaultOptsProvider) {
+    var hammerOptions = {recognizers: [
+      [Hammer.Tap, {time: 250}]
+    ]};
+    hammerDefaultOptsProvider.set(hammerOptions);
+  }]);
+})();
+
+(function() {
+  'use strict';
 
   angular.module('numbleApp').controller('ResultsCtrl', ["$scope", "stateService", "$location", function($scope, stateService, $location) {
     function startOver() {
@@ -116,7 +127,7 @@
 
 (function() {
   'use strict';
-  angular.module('numbleApp').config(["$routeProvider", "$httpProvider", function($routeProvider, $httpProvider) {
+  angular.module('numbleApp').config(["$routeProvider", function($routeProvider) {
     $routeProvider.
       when('/', {
         templateUrl: 'partials/start.html',

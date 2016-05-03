@@ -14,6 +14,8 @@ module.exports = function(config) {
       'node_modules/angular/angular.js',
       'node_modules/angular-route/angular-route.js',
       'node_modules/angular-mocks/angular-mocks.js',
+      'bower_components/hammerjs/hammer.min.js',
+      'bower_components/angular-gestures/gestures.min.js',
       'app/js/app.js',
       'app/js/**/*.js'
     ],

@@ -1,0 +1,21 @@
+{
+  "name": "numble",
+  "description": "Numble Game",
+  "main": "",
+  "authors": [
+    "Mark Katerberg <katerberg@fastmail.fm>"
+  ],
+  "license": "AGPL",
+  "homepage": "https://github.com/katerberg/numble",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-gestures": "^0.3.1"
+  }
+}

@@ -2,6 +2,7 @@
   'use strict';
 
   var numbleApp = angular.module('numbleApp', [
-      'ngRoute'
+      'ngRoute',
+      'angular-gestures'
   ]);
 })();

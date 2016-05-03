@@ -25,7 +25,7 @@
     "phantomjs-prebuilt": "^2.1.7"
   },
   "scripts": {
-    "prestart": "npm install",
+    "prestart": "npm install && bower install",
     "serve": "http-server -p 8000 ./dist",
     "start": "gulp & http-server -p 8000 ./dist"
   },

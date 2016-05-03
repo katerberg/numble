@@ -47,7 +47,8 @@ gulp.task('dependency', function() {
       'node_modules/angular/angular.min.js',
       'node_modules/angular-resource/angular-resource.min.js',
       'node_modules/angular-route/angular-route.min.js',
-      'node_modules/fastclick/lib/fastclick.js'
+      'bower_components/hammerjs/hammer.min.js',
+      'bower_components/angular-gestures/gestures.min.js'
     ])
     .pipe(gulp.dest('dist/js'));
         
