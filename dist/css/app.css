@@ -11,16 +11,20 @@ button {
   #game #board {
     font-size: 1.5em;
     text-align: center; }
-    #game #board span {
-      padding: 1em;
-      display: inline-block;
-      cursor: pointer;
-      border-radius: 6px;
-      border: 1px solid #eee; }
-      #game #board span:hover {
-        background: #ccc; }
-      #game #board span.selected {
-        background: #c00; }
+    #game #board .row {
+      display: -ms-flexbox;
+      display: flex; }
+      #game #board .row span {
+        width: 20%;
+        padding: 1em;
+        display: inline-block;
+        cursor: pointer;
+        border-radius: 6px;
+        border: 1px solid #eee; }
+        #game #board .row span:hover {
+          background: #ccc; }
+        #game #board .row span.selected {
+          background: #c00; }
   #game ul.current li {
     color: #00c; }
   #game ul.found li {
@@ -31,4 +35,12 @@ button {
     border: none;
     border-radius: 4px;
     font-size: 1.8em;
-    margin-top: 1em; }
+    margin-top: 0.2em; }
+
+@media screen and (min-width: 350px) {
+  #game #board .row {
+    display: block; }
+    #game #board .row span {
+      width: auto; }
+  #game button.undo {
+    margin-top: 1em; } }
