@@ -121,8 +121,8 @@ angular.module('numbleApp').directive('makTouch', function() {
     link: function($scope, element, attrs) {
       console.log('bound');
       console.log(element);
-      element.on('touchenter', function() {
-        alert('entered');
+      element.on('touchmove', function() {
+        alert('moved');
       });
     }
   };

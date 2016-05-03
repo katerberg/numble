@@ -9,7 +9,6 @@ button {
   #game header {
     text-align: left; }
   #game #board {
-    background-color: tomato;
     font-size: 1.5em;
     text-align: center; }
     #game #board .row {
