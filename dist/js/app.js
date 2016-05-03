@@ -99,9 +99,6 @@
     $scope.state = stateService.state;
     $scope.time = timeService.getTime;
     $scope.undo = stateService.undo;
-    $scope.foo = function() {
-      alert('touched');
-    };
   }]);
 })();
 
@@ -113,6 +110,23 @@
     ]};
     hammerDefaultOptsProvider.set(hammerOptions);
   }]);
+})();
+
+(function() {
+'use strict';
+
+angular.module('numbleApp').directive('makTouch', function() {
+  return {
+    restrict: 'A',
+    link: function($scope, element, attrs) {
+      console.log('bound');
+      console.log(element);
+      element.on('touchenter', function() {
+        alert('entered');
+      });
+    }
+  };
+});
 })();
 
 (function() {

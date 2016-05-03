@@ -41,8 +41,5 @@
     $scope.state = stateService.state;
     $scope.time = timeService.getTime;
     $scope.undo = stateService.undo;
-    $scope.foo = function() {
-      alert('touched');
-    };
   });
 })();
