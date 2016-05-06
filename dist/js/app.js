@@ -115,14 +115,19 @@
 (function() {
   'use strict';
 
-  angular.module('numbleApp').controller('ResultsCtrl', ["$scope", "stateService", "$location", function($scope, stateService, $location) {
+  angular.module('numbleApp').controller('ResultsCtrl', ["$scope", "$window", "stateService", "$location", function($scope, $window, stateService, $location) {
     function startOver() {
       stateService.reset();
       $location.url('/play');
     }
 
+    function getShareUrl() {
+      return $window.location;
+    }
+
     $scope.score = stateService.state.score;
     $scope.startOver = startOver;
+    $scope.getShareUrl = getShareUrl;
   }]);
 })();
 

@@ -46,24 +46,5 @@ describe('ResultsCtrl', function() {
         expect(stateService.reset).toHaveBeenCalled();
       });
     });
-
-    describe('#share()', function() {
-      beforeEach(function() {
-        spyOn(stateService, 'reset');
-        spyOn($location, 'url');
-      });
-
-      it('goes back to game page', function() {
-        $scope.startOver();
-
-        expect($location.url).toHaveBeenCalledWith('/play');
-      });
-
-      it('resets state', function() {
-        $scope.startOver();
-
-        expect(stateService.reset).toHaveBeenCalled();
-      });
-    });
   });
 });
