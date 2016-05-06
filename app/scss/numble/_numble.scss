@@ -1,6 +1,23 @@
-button {
+@mixin button() {
   width: 100%;
   border: none;
   border-radius: 4px;
   font-size: 1.8em;
+  background-color: #ccc;
+  color: black;
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  border: 1px solid black;
+  padding: 0;
+  margin: 8px 0 8px;
+}
+
+
+button {
+  @include button();
+}
+
+body {
+  font-family: Cantarell;
 }

@@ -6,6 +6,7 @@
       stateService.reset();
       $location.url('/play');
     }
+
     $scope.score = stateService.state.score;
     $scope.startOver = startOver;
   });

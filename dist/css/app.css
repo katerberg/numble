@@ -2,7 +2,18 @@ button {
   width: 100%;
   border: none;
   border-radius: 4px;
-  font-size: 1.8em; }
+  font-size: 1.8em;
+  background-color: #ccc;
+  color: black;
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  border: 1px solid black;
+  padding: 0;
+  margin: 8px 0 8px; }
+
+body {
+  font-family: Cantarell; }
 
 #game {
   text-align: center; }
@@ -44,3 +55,17 @@ button {
       width: auto; }
   #game button.undo {
     margin-top: 1em; } }
+
+#results a {
+  width: 100%;
+  border: none;
+  border-radius: 4px;
+  font-size: 1.8em;
+  background-color: #ccc;
+  color: black;
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  border: 1px solid black;
+  padding: 0;
+  margin: 8px 0 8px; }
