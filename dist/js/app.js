@@ -59,8 +59,9 @@
 (function() {
   'use strict';
 
-  angular.module('numbleApp').controller('GameCtrl', ["$scope", "$location", "stateService", "boardService", "timeService", "selectionService", "winService", function($scope,
+  angular.module('numbleApp').controller('GameCtrl', ["$scope", "$location", "$routeParams", "stateService", "boardService", "timeService", "selectionService", "winService", function($scope,
         $location,
+        $routeParams,
         stateService,
         boardService,
         timeService,
@@ -95,6 +96,9 @@
       $location.url('/results');
     });
     timeService.startTimer(60);
+
+    console.log('$routeParams.share');
+
     $scope.num = boardService.getBoard(selectVal);
     $scope.state = stateService.state;
     $scope.time = timeService.getTime;
@@ -121,8 +125,8 @@
       $location.url('/play');
     }
 
-    function getShareUrl() {
-      return $window.location;
+    function getShareUrl(score) {
+      return 'href://' + $window.location.host + $window.location.pathname + '#play\?share=' + score;
     }
 
     $scope.score = stateService.state.score;

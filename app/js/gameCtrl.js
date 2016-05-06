@@ -3,6 +3,7 @@
 
   angular.module('numbleApp').controller('GameCtrl', function($scope,
         $location,
+        $routeParams,
         stateService,
         boardService,
         timeService,
@@ -37,6 +38,9 @@
       $location.url('/results');
     });
     timeService.startTimer(60);
+
+    console.log('$routeParams.share');
+
     $scope.num = boardService.getBoard(selectVal);
     $scope.state = stateService.state;
     $scope.time = timeService.getTime;
