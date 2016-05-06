@@ -39,7 +39,7 @@
     });
     timeService.startTimer(60);
 
-    console.log('$routeParams.share');
+    console.log($routeParams.score);
 
     $scope.num = boardService.getBoard(selectVal);
     $scope.state = stateService.state;
