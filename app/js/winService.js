@@ -38,18 +38,20 @@
     }
 
     function getScore(number) {
-      var n = number.length - 2;
-      if (n <= 1) {
-        return n;
+      switch (number.length - 2) {
+        case 3:
+          return 1;
+        case 4:
+          return 3;
+        case 5:
+          return 5;
+        case 6:
+          return 10;
+        case 7:
+          return 15;
+        default:
+          return 23;
       }
-      var fibo = 1;
-      var fiboPrev = 0;
-      for (var i = 2; i < n; i++) {
-        var temp = fibo;
-        fibo += fiboPrev;
-        fiboPrev = temp;
-      }
-      return fibo;
     }
 
     return {
