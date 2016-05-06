@@ -10,7 +10,7 @@
       return maybe;
     }
 
-    function getBoard(callback) {
+    function getBoard(callback, layout) {
       var num = [];
       var exclude = [];
       for (var i = 0; i <= 4; i++) {
@@ -18,7 +18,8 @@
         for (var j = 0; j <= 4; j++) {
           var myI = i;
           var myJ = j;
-          var value = getRandomInt(exclude);
+          var nextNum = (layout || []).shift();
+          var value = nextNum || getRandomInt(exclude);
           if (value === 0) {
             exclude.push(0);
           }
@@ -39,9 +40,16 @@
       return xDistance <= 1 && yDistance <= 1;
     }
 
+    function parseLayout(layoutString) {
+      if (layoutString) {
+        return layoutString.split(',');
+      }
+    }
+
     return {
       getBoard: getBoard,
-      areTouching: areTouching
+      areTouching: areTouching,
+      parseLayout: parseLayout
     };
   });
 })();

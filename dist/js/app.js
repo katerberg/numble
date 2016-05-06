@@ -19,7 +19,7 @@
       return maybe;
     }
 
-    function getBoard(callback) {
+    function getBoard(callback, layout) {
       var num = [];
       var exclude = [];
       for (var i = 0; i <= 4; i++) {
@@ -27,7 +27,8 @@
         for (var j = 0; j <= 4; j++) {
           var myI = i;
           var myJ = j;
-          var value = getRandomInt(exclude);
+          var nextNum = (layout || []).shift();
+          var value = nextNum || getRandomInt(exclude);
           if (value === 0) {
             exclude.push(0);
           }
@@ -48,9 +49,16 @@
       return xDistance <= 1 && yDistance <= 1;
     }
 
+    function parseLayout(layoutString) {
+      if (layoutString) {
+        return layoutString.split(',');
+      }
+    }
+
     return {
       getBoard: getBoard,
-      areTouching: areTouching
+      areTouching: areTouching,
+      parseLayout: parseLayout
     };
   });
 })();
@@ -69,7 +77,7 @@
         winService) {
     function selectVal(i, j) {
       return function() {
-        select($scope.num[i][j]);
+        select($scope.state.board[i][j]);
       };
     }
 
@@ -97,10 +105,8 @@
     });
     timeService.startTimer(60);
 
-    console.log($routeParams.score);
-
-    $scope.num = boardService.getBoard(selectVal);
     $scope.state = stateService.state;
+    $scope.state.board = boardService.getBoard(selectVal, boardService.parseLayout($routeParams.layout));
     $scope.time = timeService.getTime;
     $scope.undo = stateService.undo;
   }]);
@@ -119,14 +125,26 @@
 (function() {
   'use strict';
 
-  angular.module('numbleApp').controller('ResultsCtrl', ["$scope", "$window", "stateService", "$location", function($scope, $window, stateService, $location) {
+  angular.module('numbleApp').controller('ResultsCtrl', ["$scope", "$window", "stateService", "$location", function($scope,
+      $window,
+      stateService,
+      $location) {
     function startOver() {
       stateService.reset();
       $location.url('/play');
     }
-
+    function getShare() {
+      var displayVals = stateService.state.board.reduce(function(prevArr, arr) {
+        return prevArr + arr.reduce(function(prevItem, item) {
+          return prevItem + item.display + ',';
+        }, '');
+      }, '');
+      displayVals = displayVals.substring(0, displayVals.length - 1);
+      return 'http://katerberg.github.io/numble/dist/index.html#/play?layout=' + displayVals;
+    }
     $scope.score = stateService.state.score;
     $scope.startOver = startOver;
+    $scope.getShare = getShare;
   }]);
 })();
 
@@ -190,6 +208,7 @@
 
   angular.module('numbleApp').factory('stateService', function() {
     var state = {
+      board: [],
       selected: [],
       found: [],
       score: 0

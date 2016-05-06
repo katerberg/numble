@@ -55,5 +55,15 @@ describe('boardService', function() {
       expect(instance.areTouching(first, second)).toBeFalsy();
     });
   });
+
+  describe('#parseLayout()', function() {
+    it('handles null', function() {
+      expect(instance.parseLayout()).toBeUndefined();
+    });
+
+    it('parses comma separated list', function() {
+      expect(instance.parseLayout('1,2,3,6')).toEqual(['1', '2', '3', '6']);
+    });
+  });
 });
 

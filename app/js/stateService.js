@@ -3,6 +3,7 @@
 
   angular.module('numbleApp').factory('stateService', function() {
     var state = {
+      board: [],
       selected: [],
       found: [],
       score: 0

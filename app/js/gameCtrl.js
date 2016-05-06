@@ -11,7 +11,7 @@
         winService) {
     function selectVal(i, j) {
       return function() {
-        select($scope.num[i][j]);
+        select($scope.state.board[i][j]);
       };
     }
 
@@ -39,10 +39,8 @@
     });
     timeService.startTimer(60);
 
-    console.log($routeParams.score);
-
-    $scope.num = boardService.getBoard(selectVal);
     $scope.state = stateService.state;
+    $scope.state.board = boardService.getBoard(selectVal, boardService.parseLayout($routeParams.layout));
     $scope.time = timeService.getTime;
     $scope.undo = stateService.undo;
   });

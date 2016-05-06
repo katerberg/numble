@@ -1,4 +1,10 @@
 #results {
+  h2 {
+    display: inline-block;
+  }
+  input {
+    width: 100%;
+  }
   a {
     @include button();
   }

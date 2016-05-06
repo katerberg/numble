@@ -56,6 +56,12 @@ body {
   #game button.undo {
     margin-top: 1em; } }
 
+#results h2 {
+  display: inline-block; }
+
+#results input {
+  width: 100%; }
+
 #results a {
   width: 100%;
   border: none;

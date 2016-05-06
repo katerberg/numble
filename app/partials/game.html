@@ -4,7 +4,7 @@
     <h2>Time Left: {{time()}}</h2>
   </header>
   <div id="board">
-    <div ng-repeat="row in num" class="row">
+    <div ng-repeat="row in state.board" class="row">
       <span ng-repeat="cell in row" hm-tap="cell.select()" ng-class="{'selected': cell.selected}">
         {{cell.display}}
       </span>
