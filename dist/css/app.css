@@ -47,6 +47,10 @@ body {
     border-radius: 4px;
     font-size: 1.8em;
     margin-top: 0.2em; }
+  #game .goal {
+    color: tomato; }
+    #game .goal.beaten {
+      color: lime; }
 
 @media screen and (min-width: 350px) {
   #game #board .row {

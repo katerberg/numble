@@ -40,6 +40,12 @@
     font-size: 1.8em;
     margin-top: 0.2em;
   }
+  .goal {
+    color: tomato;
+    &.beaten {
+      color: lime;
+    }
+  }
 }
 
 @media screen and (min-width: $breakpoint-min-width) {

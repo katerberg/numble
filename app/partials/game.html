@@ -1,6 +1,6 @@
 <div id="game">
   <header>
-    <h1>Score: {{state.score}}</h1>
+    <h1>Score: {{state.score}}<span class="goal" ng-if="goal" ng-class="{'beaten': goal < state.score}">&nbsp;({{goal}})<span></h1>
     <h2>Time Left: {{time()}}</h2>
   </header>
   <div id="board">

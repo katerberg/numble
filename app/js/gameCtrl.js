@@ -41,6 +41,7 @@
 
     $scope.state = stateService.state;
     $scope.state.board = boardService.getBoard(selectVal, boardService.parseLayout($routeParams.layout));
+    $scope.goal = $routeParams.goal;
     $scope.time = timeService.getTime;
     $scope.undo = stateService.undo;
   });

@@ -107,6 +107,7 @@
 
     $scope.state = stateService.state;
     $scope.state.board = boardService.getBoard(selectVal, boardService.parseLayout($routeParams.layout));
+    $scope.goal = $routeParams.goal;
     $scope.time = timeService.getTime;
     $scope.undo = stateService.undo;
   }]);
@@ -140,7 +141,8 @@
         }, '');
       }, '');
       displayVals = displayVals.substring(0, displayVals.length - 1);
-      return 'http://katerberg.github.io/numble/dist/index.html#/play?layout=' + displayVals;
+      var goal = stateService.state.score;
+      return 'http://katerberg.github.io/numble/dist/index.html#/play?layout=' + displayVals + '&goal=' + goal;
     }
     $scope.score = stateService.state.score;
     $scope.startOver = startOver;
