@@ -19,7 +19,7 @@
     }
   }
   #board {
-    font-size: 1.5em;
+    font-size: 1.3em;
     text-align: center;
     .row {
       display: flex;
@@ -65,10 +65,13 @@
 
 @media screen and (min-width: $breakpoint-min-width) {
   #game {
-    #board .row {
-      display: block;
-      span {
-        width: auto;
+    #board {
+      font-size: 1.5em;
+      .row {
+        display: block;
+        span {
+          width: auto;
+        }
       }
     }
     button.undo {

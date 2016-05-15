@@ -33,7 +33,7 @@ body {
         background-color: tomato;
         transition: width 1s linear; }
   #game #board {
-    font-size: 1.5em;
+    font-size: 1.3em;
     text-align: center; }
     #game #board .row {
       display: -ms-flexbox;
@@ -66,10 +66,12 @@ body {
       color: lime; }
 
 @media screen and (min-width: 350px) {
-  #game #board .row {
-    display: block; }
-    #game #board .row span {
-      width: auto; }
+  #game #board {
+    font-size: 1.5em; }
+    #game #board .row {
+      display: block; }
+      #game #board .row span {
+        width: auto; }
   #game button.undo {
     margin-top: 1em; } }
 
