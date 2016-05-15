@@ -75,6 +75,9 @@
         timeService,
         selectionService,
         winService) {
+
+    var GAME_TIME = 60;
+
     function selectVal(i, j) {
       return function() {
         select($scope.state.board[i][j]);
@@ -103,12 +106,15 @@
     timeService.setAlert(function() {
       $location.url('/results');
     });
-    timeService.startTimer(60);
+    timeService.startTimer(GAME_TIME);
 
     $scope.state = stateService.state;
     $scope.state.board = boardService.getBoard(selectVal, boardService.parseLayout($routeParams.layout));
     $scope.goal = $routeParams.goal;
     $scope.time = timeService.getTime;
+    $scope.timePercentage = function() {
+      return 100 * timeService.getTime() / GAME_TIME;
+    };
     $scope.undo = stateService.undo;
   }]);
 })();

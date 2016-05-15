@@ -2,6 +2,20 @@
   text-align: center;
   header {
     text-align: left;
+    div.time-container {
+      width: 100%;
+      height: 25px;
+      margin: 0;
+      background-color: #333;
+      position: relative;
+      div.time-left {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        background-color: tomato;
+      }
+    }
   }
   #board {
     font-size: 1.5em;

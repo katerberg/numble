@@ -19,6 +19,18 @@ body {
   text-align: center; }
   #game header {
     text-align: left; }
+    #game header div.time-container {
+      width: 100%;
+      height: 25px;
+      margin: 0;
+      background-color: #333;
+      position: relative; }
+      #game header div.time-container div.time-left {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        background-color: tomato; }
   #game #board {
     font-size: 1.5em;
     text-align: center; }
