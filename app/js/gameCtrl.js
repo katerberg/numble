@@ -47,7 +47,7 @@
     $scope.goal = $routeParams.goal;
     $scope.time = timeService.getTime;
     $scope.timePercentage = function() {
-      return 100 * timeService.getTime() / GAME_TIME;
+      return 100 * (timeService.getTime() - 1) / GAME_TIME;
     };
     $scope.undo = stateService.undo;
   });
