@@ -22,6 +22,18 @@ gulp.task('lint', function() {
         .pipe(jshint.reporter('default'));
  });
 
+// Move dependent CSS
+gulp.task('dependentCss', function() {
+    return gulp.src('bower_components/font-awesome/css/font-awesome.min.css')
+        .pipe(gulp.dest('dist/css'));
+});
+
+// Move fonts
+gulp.task('fonts', function() {
+    return gulp.src('bower_components/font-awesome/fonts/*')
+        .pipe(gulp.dest('dist/fonts'));
+});
+
 // Compile Our Sass
 gulp.task('sass', function() {
     return gulp.src(basedir + 'scss/**/*.scss')
@@ -42,7 +54,7 @@ gulp.task('scripts', function() {
 });
 
 // Deploy dependency JS
-gulp.task('dependency', function() {
+gulp.task('dependentJs', function() {
     return gulp.src([
       'node_modules/angular/angular.min.js',
       'node_modules/angular-resource/angular-resource.min.js',
@@ -76,7 +88,7 @@ gulp.task('watch', function() {
 });
 
 // Build task
-gulp.task('build', ['lint', 'sass', 'dependency', 'scripts', 'html', 'static']);
+gulp.task('build', ['lint', 'sass', 'dependentCss', 'fonts', 'dependentJs', 'scripts', 'html', 'static']);
 
 // Default Task
 gulp.task('default', ['build', 'watch']);
