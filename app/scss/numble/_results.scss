@@ -8,4 +8,7 @@
   a {
     @include button();
   }
+  .challenge-loader {
+    font-size: 3em;
+  }
 }

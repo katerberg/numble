@@ -94,3 +94,6 @@ body {
   border: 1px solid black;
   padding: 0;
   margin: 8px 0 8px; }
+
+#results .challenge-loader {
+  font-size: 3em; }
