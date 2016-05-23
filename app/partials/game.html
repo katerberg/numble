@@ -5,6 +5,7 @@
       <div class="time-left" style="width: {{timePercentage()}}%"></div>
     </div>
   </header>
+  <i ng-if="scoreStorage && scoreStorage.$$state.status !== 1" class="fa fa-spin fa-spinner fa-5x"></i>
   <div id="board">
     <div ng-repeat="row in state.board" class="row">
       <span ng-repeat="cell in row" hm-tap="cell.select()" ng-class="{'selected': cell.selected}">

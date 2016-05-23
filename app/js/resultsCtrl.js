@@ -14,7 +14,7 @@
     function getShare() {
       $scope.storage = storageService.storeScore();
       $scope.storage.then(function(res) {
-        $scope.shareId = res.data.name;
+        $scope.shareId = res.name;
       });
     }
     $scope.score = stateService.state.score;

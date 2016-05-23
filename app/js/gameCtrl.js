@@ -5,6 +5,7 @@
         $location,
         $routeParams,
         stateService,
+        storageService,
         boardService,
         timeService,
         selectionService,
@@ -40,11 +41,19 @@
     timeService.setAlert(function() {
       $location.url('/results');
     });
-    timeService.startTimer(GAME_TIME);
 
     $scope.state = stateService.state;
-    $scope.state.board = boardService.getBoard(selectVal, boardService.parseLayout($routeParams.layout));
-    $scope.goal = $routeParams.goal;
+    if ($routeParams.goal) {
+      $scope.scoreStorage = storageService.getScore($routeParams.goal);
+      $scope.scoreStorage.then(function(res) {
+        $scope.state.board = boardService.getBoard(selectVal, boardService.parseLayout(res.layout));
+        $scope.goal = res.score;
+        timeService.startTimer(GAME_TIME);
+      });
+    } else {
+      $scope.state.board = boardService.getBoard(selectVal);
+      timeService.startTimer(GAME_TIME);
+    }
     $scope.time = timeService.getTime;
     $scope.timePercentage = function() {
       return 100 * (timeService.getTime() - 1) / GAME_TIME;

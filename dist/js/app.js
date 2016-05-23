@@ -67,10 +67,11 @@
 (function() {
   'use strict';
 
-  angular.module('numbleApp').controller('GameCtrl', ["$scope", "$location", "$routeParams", "stateService", "boardService", "timeService", "selectionService", "winService", function($scope,
+  angular.module('numbleApp').controller('GameCtrl', ["$scope", "$location", "$routeParams", "stateService", "storageService", "boardService", "timeService", "selectionService", "winService", function($scope,
         $location,
         $routeParams,
         stateService,
+        storageService,
         boardService,
         timeService,
         selectionService,
@@ -106,11 +107,19 @@
     timeService.setAlert(function() {
       $location.url('/results');
     });
-    timeService.startTimer(GAME_TIME);
 
     $scope.state = stateService.state;
-    $scope.state.board = boardService.getBoard(selectVal, boardService.parseLayout($routeParams.layout));
-    $scope.goal = $routeParams.goal;
+    if ($routeParams.goal) {
+      $scope.scoreStorage = storageService.getScore($routeParams.goal);
+      $scope.scoreStorage.then(function(res) {
+        $scope.state.board = boardService.getBoard(selectVal, boardService.parseLayout(res.layout));
+        $scope.goal = res.score;
+        timeService.startTimer(GAME_TIME);
+      });
+    } else {
+      $scope.state.board = boardService.getBoard(selectVal);
+      timeService.startTimer(GAME_TIME);
+    }
     $scope.time = timeService.getTime;
     $scope.timePercentage = function() {
       return 100 * (timeService.getTime() - 1) / GAME_TIME;
@@ -145,7 +154,7 @@
     function getShare() {
       $scope.storage = storageService.storeScore();
       $scope.storage.then(function(res) {
-        $scope.shareId = res.data.name;
+        $scope.shareId = res.name;
       });
     }
     $scope.score = stateService.state.score;
@@ -262,7 +271,7 @@
   'use strict';
 
   angular.module('numbleApp').factory('storageService', ["$http", "stateService", function($http, stateService) {
-    var GAMES_URL = 'https://project-8921628173750252600.firebaseio.com/games.json';
+    var GAMES_URL = 'https://project-8921628173750252600.firebaseio.com/games';
 
     function storeScore() {
       var displayVals = stateService.state.board.reduce(function(prevArr, arr) {
@@ -274,10 +283,19 @@
         score: stateService.state.score,
         values: displayVals.substring(0, displayVals.length - 1)
       };
-      return $http.post(GAMES_URL, storage);
+      return $http.post(GAMES_URL + '.json', storage).then(function(res) {
+        return res.data;
+      });
+    }
+
+    function getScore(key) {
+      return $http.get(GAMES_URL + '/' + key + '.json').then(function(res) {
+        return res.data;
+      });
     }
 
     return {
+      getScore: getScore,
       storeScore: storeScore
     };
   }]);
