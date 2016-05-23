@@ -132,23 +132,24 @@
 (function() {
   'use strict';
 
-  angular.module('numbleApp').controller('ResultsCtrl', ["$scope", "$window", "stateService", "$location", function($scope,
-      $window,
+  angular.module('numbleApp').controller('ResultsCtrl', ["$scope", "stateService", "storageService", "$location", function($scope,
       stateService,
+      storageService,
       $location) {
+
+    $scope.storage = storageService.storeScore();
+    $scope.storage.then(function(res) {
+      $scope.shareId = res.data.name;
+    });
+
     function startOver() {
       stateService.reset();
       $location.url('/play');
     }
+
     function getShare() {
-      var displayVals = stateService.state.board.reduce(function(prevArr, arr) {
-        return prevArr + arr.reduce(function(prevItem, item) {
-          return prevItem + item.display + ',';
-        }, '');
-      }, '');
-      displayVals = displayVals.substring(0, displayVals.length - 1);
-      var goal = stateService.state.score;
-      return 'http://katerberg.github.io/numble/dist/index.html#/play?layout=' + displayVals + '&goal=' + goal;
+      //$scope.storage.$$state.status; -1 if not done. 0 if not started. 1 if done.
+      return 'http://katerberg.github.io/numble/dist/index.html#/play?goal=' + $scope.shareId;
     }
     $scope.score = stateService.state.score;
     $scope.startOver = startOver;
@@ -241,6 +242,31 @@
       state: state
     };
   });
+})();
+
+(function() {
+  'use strict';
+
+  angular.module('numbleApp').factory('storageService', ["$http", "stateService", function($http, stateService) {
+    var GAMES_URL = 'https://project-8921628173750252600.firebaseio.com/games.json';
+
+    function storeScore() {
+      var displayVals = stateService.state.board.reduce(function(prevArr, arr) {
+        return prevArr + arr.reduce(function(prevItem, item) {
+          return prevItem + item.display + ',';
+        }, '');
+      }, '');
+      var storage = {
+        score: stateService.state.score,
+        values: displayVals.substring(0, displayVals.length - 1)
+      };
+      return $http.post(GAMES_URL, storage);
+    }
+
+    return {
+      storeScore: storeScore
+    };
+  }]);
 })();
 
 (function() {
