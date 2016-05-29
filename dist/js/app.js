@@ -177,7 +177,10 @@
 (function() {
   'use strict';
 
-  angular.module('numbleApp').factory('selectionService', ["boardService", "winService", "stateService", function(boardService, winService, stateService) {
+  angular.module('numbleApp').factory('selectionService', ["boardService", "winService", "stateService", "timeService", function(boardService,
+        winService,
+        stateService,
+        timeService) {
     function makeSelection(item) {
       item.selected = true;
       stateService.state.selected.push(item);
@@ -188,7 +191,9 @@
       valid.forEach(function(val) {
         if (stateService.state.found.indexOf(val) === -1) {
           stateService.state.found.push(val);
-          stateService.state.score += winService.getScore(val);
+          var score = winService.getScore(val);
+          stateService.state.score += score;
+          timeService.addTime(score);
           stateService.undo();
         }
       });
@@ -313,8 +318,8 @@
       }
     }
 
-    function startTimer(time) {
-      timeRemaining = time;
+    function startTimer(timeInSeconds) {
+      timeRemaining = timeInSeconds;
       $timeout(tickFn, 1000);
     }
 
@@ -322,14 +327,19 @@
       return timeRemaining;
     }
 
+    function addTime(timeInSeconds) {
+      timeRemaining += timeInSeconds;
+    }
+
     function setAlert(callback) {
       callbacks.push(callback);
     }
 
     return {
-      startTimer: startTimer,
+      addTime: addTime,
       getTime: getTime,
       setAlert: setAlert,
+      startTimer: startTimer,
       GAME_TIME: 60
     };
   }]);
@@ -338,12 +348,11 @@
 (function() {
   'use strict';
 
-  angular.module('numbleApp').directive('numTimer', ["timeService", function(timeService) {
+  angular.module('numbleApp').directive('numTimer', ["timeService", "$location", function(timeService, $location) {
     return {
       restrict: 'E',
       templateUrl: 'templates/timer.html',
-      scope: {
-      },
+      scope: {},
       link: function($scope, element) {
         var GAME_TIME = timeService.GAME_TIME;
 

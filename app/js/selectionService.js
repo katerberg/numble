@@ -1,7 +1,10 @@
 (function() {
   'use strict';
 
-  angular.module('numbleApp').factory('selectionService', function(boardService, winService, stateService) {
+  angular.module('numbleApp').factory('selectionService', function(boardService,
+        winService,
+        stateService,
+        timeService) {
     function makeSelection(item) {
       item.selected = true;
       stateService.state.selected.push(item);
@@ -12,7 +15,9 @@
       valid.forEach(function(val) {
         if (stateService.state.found.indexOf(val) === -1) {
           stateService.state.found.push(val);
-          stateService.state.score += winService.getScore(val);
+          var score = winService.getScore(val);
+          stateService.state.score += score;
+          timeService.addTime(score);
           stateService.undo();
         }
       });

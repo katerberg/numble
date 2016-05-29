@@ -40,4 +40,12 @@ describe('timeService', function() {
 
     expect(instance.getTime()).toEqual(7);
   });
+
+  it('allows time to be added', function() {
+    instance.startTimer(10);
+
+    instance.addTime(3);
+
+    expect(instance.getTime()).toEqual(13);
+  });
 });

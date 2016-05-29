@@ -16,8 +16,8 @@
       }
     }
 
-    function startTimer(time) {
-      timeRemaining = time;
+    function startTimer(timeInSeconds) {
+      timeRemaining = timeInSeconds;
       $timeout(tickFn, 1000);
     }
 
@@ -25,14 +25,19 @@
       return timeRemaining;
     }
 
+    function addTime(timeInSeconds) {
+      timeRemaining += timeInSeconds;
+    }
+
     function setAlert(callback) {
       callbacks.push(callback);
     }
 
     return {
-      startTimer: startTimer,
+      addTime: addTime,
       getTime: getTime,
       setAlert: setAlert,
+      startTimer: startTimer,
       GAME_TIME: 60
     };
   });

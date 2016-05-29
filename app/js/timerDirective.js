@@ -1,12 +1,11 @@
 (function() {
   'use strict';
 
-  angular.module('numbleApp').directive('numTimer', function(timeService) {
+  angular.module('numbleApp').directive('numTimer', function(timeService, $location) {
     return {
       restrict: 'E',
       templateUrl: 'templates/timer.html',
-      scope: {
-      },
+      scope: {},
       link: function($scope, element) {
         var GAME_TIME = timeService.GAME_TIME;
 
