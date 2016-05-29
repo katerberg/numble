@@ -67,15 +67,13 @@
 (function() {
   'use strict';
 
-  angular.module('numbleApp').controller('GameCtrl', ["$scope", "$location", "$routeParams", "stateService", "storageService", "boardService", "timeService", "selectionService", "winService", function($scope,
-        $location,
+  angular.module('numbleApp').controller('GameCtrl', ["$scope", "$routeParams", "stateService", "storageService", "boardService", "timeService", "selectionService", function($scope,
         $routeParams,
         stateService,
         storageService,
         boardService,
         timeService,
-        selectionService,
-        winService) {
+        selectionService) {
 
     function selectVal(i, j) {
       return function() {
@@ -88,19 +86,7 @@
       if (!selectionService.isValidMove(item, state.selected)) {
         return;
       }
-      item.selected = true;
-      state.selected.push(item);
-      var values = state.selected.map(function(val) {
-        return val.display;
-      });
-      var valid = winService.check(values);
-      valid.forEach(function(val) {
-        if (state.found.indexOf(val) === -1) {
-          state.found.push(val);
-          state.score += winService.getScore(val);
-          stateService.undo();
-        }
-      });
+      selectionService.makeSelection(item);
     }
 
     $scope.state = stateService.state;
@@ -191,7 +177,23 @@
 (function() {
   'use strict';
 
-  angular.module('numbleApp').factory('selectionService', ["boardService", function(boardService) {
+  angular.module('numbleApp').factory('selectionService', ["boardService", "winService", "stateService", function(boardService, winService, stateService) {
+    function makeSelection(item) {
+      item.selected = true;
+      stateService.state.selected.push(item);
+      var values = stateService.state.selected.map(function(val) {
+        return val.display;
+      });
+      var valid = winService.check(values);
+      valid.forEach(function(val) {
+        if (stateService.state.found.indexOf(val) === -1) {
+          stateService.state.found.push(val);
+          stateService.state.score += winService.getScore(val);
+          stateService.undo();
+        }
+      });
+    }
+
     function isValidMove(item, selected) {
       if (item.selected) {
         return false;
@@ -203,17 +205,18 @@
     }
 
     return {
-      isValidMove: isValidMove
+      isValidMove: isValidMove,
+      makeSelection: makeSelection
     };
   }]);
 })();
 
-
 (function() {
   'use strict';
 
-  angular.module('numbleApp').controller('StartCtrl', ["$scope", "$location", function($scope, $location) {
-    function start() {
+  angular.module('numbleApp').controller('StartCtrl', ["$scope", "$location", "stateService", function($scope, $location, stateService) {
+    function start(gameMode) {
+      stateService.state.mode = gameMode;
       $location.url('/play');
     }
 
@@ -229,6 +232,7 @@
       board: [],
       selected: [],
       found: [],
+      mode: 'normal',
       score: 0
     };
 

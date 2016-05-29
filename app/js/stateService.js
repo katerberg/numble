@@ -6,6 +6,7 @@
       board: [],
       selected: [],
       found: [],
+      mode: 'normal',
       score: 0
     };
 
