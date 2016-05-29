@@ -20,6 +20,7 @@
       if (!selectionService.isValidMove(item, state.selected)) {
         return;
       }
+      item.replace = false;
       selectionService.makeSelection(item);
     }
 

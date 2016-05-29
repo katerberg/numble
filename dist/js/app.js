@@ -87,6 +87,7 @@
       if (!selectionService.isValidMove(item, state.selected)) {
         return;
       }
+      item.replace = false;
       selectionService.makeSelection(item);
     }
 
@@ -191,11 +192,12 @@
       var valid = winService.check(values);
       valid.forEach(function(val) {
         if (stateService.state.found.indexOf(val) === -1) {
-          if (stateService.state.mode === 'rotating') {
-            stateService.state.selected.forEach(function(selected) {
+          stateService.state.selected.forEach(function(selected) {
+            selected.replace = true;
+            if (stateService.state.mode === 'rotating') {
               selected.display = boardService.getNewCellValue();
-            });
-          }
+            }
+          });
           if (stateService.state.mode !== 'rotating') {
             stateService.state.found.push(val);
           }
