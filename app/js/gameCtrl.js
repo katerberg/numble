@@ -38,22 +38,18 @@
         }
       });
     }
+
     timeService.setAlert(function() {
       $location.url('/results');
     });
 
     $scope.state = stateService.state;
-    if ($routeParams.goal) {
-      $scope.scoreStorage = storageService.getScore($routeParams.goal);
-      $scope.scoreStorage.then(function(res) {
-        $scope.state.board = boardService.getBoard(selectVal, boardService.parseLayout(res.layout));
-        $scope.goal = res.score;
-        timeService.startTimer(GAME_TIME);
-      });
-    } else {
-      $scope.state.board = boardService.getBoard(selectVal);
+    $scope.scoreStorage = storageService.getScore($routeParams.goal);
+    $scope.scoreStorage.then(function(res) {
+      $scope.state.board = boardService.getBoard(selectVal, boardService.parseLayout(res ? res.layout : null));
+      $scope.goal = res ? res.score : null;
       timeService.startTimer(GAME_TIME);
-    }
+    });
     $scope.time = timeService.getTime;
     $scope.timePercentage = function() {
       return 100 * (timeService.getTime() - 1) / GAME_TIME;
