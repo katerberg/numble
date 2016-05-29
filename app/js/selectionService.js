@@ -14,7 +14,14 @@
       var valid = winService.check(values);
       valid.forEach(function(val) {
         if (stateService.state.found.indexOf(val) === -1) {
-          stateService.state.found.push(val);
+          if (stateService.state.mode === 'rotating') {
+            stateService.state.selected.forEach(function(selected) {
+              selected.display = boardService.getNewCellValue();
+            });
+          }
+          if (stateService.state.mode !== 'rotating') {
+            stateService.state.found.push(val);
+          }
           var score = winService.getScore(val);
           stateService.state.score += score;
           timeService.addTime(score);

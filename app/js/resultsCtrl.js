@@ -7,7 +7,7 @@
       $location) {
 
     function startOver() {
-      stateService.reset();
+      stateService.resetGame();
       $location.url('/play');
     }
 

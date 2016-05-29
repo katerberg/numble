@@ -36,7 +36,7 @@ describe('ResultsCtrl', function() {
 
     describe('#startOver()', function() {
       beforeEach(function() {
-        spyOn(stateService, 'reset');
+        spyOn(stateService, 'resetGame');
         spyOn($location, 'url');
       });
 
@@ -49,7 +49,7 @@ describe('ResultsCtrl', function() {
       it('resets state', function() {
         $scope.startOver();
 
-        expect(stateService.reset).toHaveBeenCalled();
+        expect(stateService.resetGame).toHaveBeenCalled();
       });
     });
 

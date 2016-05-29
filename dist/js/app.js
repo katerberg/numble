@@ -11,24 +11,24 @@
   'use strict';
 
   angular.module('numbleApp').factory('boardService', function() {
-    function getRandomInt(excluded) {
+    var exclude = [];
+    function getNewCellValue() {
       var maybe = Math.floor(Math.random() * 10);
-      if (excluded.indexOf(maybe) !== -1) {
-        return getRandomInt(excluded);
+      if (exclude.indexOf(maybe) !== -1) {
+        return getNewCellValue();
       }
       return maybe;
     }
 
     function getBoard(callback, layout) {
       var num = [];
-      var exclude = [];
       for (var i = 0; i <= 4; i++) {
         num.push([]);
         for (var j = 0; j <= 4; j++) {
           var myI = i;
           var myJ = j;
           var nextNum = (layout || []).shift();
-          var value = nextNum || getRandomInt(exclude);
+          var value = nextNum || getNewCellValue();
           if (value === 0) {
             exclude.push(0);
           }
@@ -57,6 +57,7 @@
 
     return {
       getBoard: getBoard,
+      getNewCellValue: getNewCellValue,
       areTouching: areTouching,
       parseLayout: parseLayout
     };
@@ -119,7 +120,7 @@
       $location) {
 
     function startOver() {
-      stateService.reset();
+      stateService.resetGame();
       $location.url('/play');
     }
 
@@ -190,7 +191,14 @@
       var valid = winService.check(values);
       valid.forEach(function(val) {
         if (stateService.state.found.indexOf(val) === -1) {
-          stateService.state.found.push(val);
+          if (stateService.state.mode === 'rotating') {
+            stateService.state.selected.forEach(function(selected) {
+              selected.display = boardService.getNewCellValue();
+            });
+          }
+          if (stateService.state.mode !== 'rotating') {
+            stateService.state.found.push(val);
+          }
           var score = winService.getScore(val);
           stateService.state.score += score;
           timeService.addTime(score);
@@ -248,7 +256,7 @@
       state.selected.length = 0;
     }
 
-    function reset() {
+    function resetGame() {
       undo();
       state.found.length = 0;
       state.score = 0;
@@ -256,7 +264,7 @@
 
     return {
       undo: undo,
-      reset: reset,
+      resetGame: resetGame,
       state: state
     };
   });

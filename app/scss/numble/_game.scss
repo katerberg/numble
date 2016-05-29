@@ -1,3 +1,17 @@
+@keyframes flash {
+  0% {
+    background-color: #c00;
+    color: #000;
+  }
+  50% {
+    color: #dd7777;
+  }
+  100% {
+    background-color: #fff;
+    color: #000;
+  }
+}
+
 #game {
   text-align: center;
   header {
@@ -35,10 +49,13 @@
         border-radius: 6px;
         border: 1px solid #eee;
         &:hover {
-          background: #ccc;
+          background-color: #ccc;
         }
         &.selected {
-          background: #c00;
+          background-color: #c00;
+        }
+        &.replaced {
+          animation: flash 0.5s 1 linear;
         }
       }
     }

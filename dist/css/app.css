@@ -15,6 +15,26 @@ button {
 body {
   font-family: Cantarell; }
 
+@-webkit-keyframes flash {
+  0% {
+    background-color: #c00;
+    color: #000; }
+  50% {
+    color: #dd7777; }
+  100% {
+    background-color: #fff;
+    color: #000; } }
+
+@keyframes flash {
+  0% {
+    background-color: #c00;
+    color: #000; }
+  50% {
+    color: #dd7777; }
+  100% {
+    background-color: #fff;
+    color: #000; } }
+
 #game {
   text-align: center; }
   #game header {
@@ -54,9 +74,12 @@ body {
         border-radius: 6px;
         border: 1px solid #eee; }
         #game #board .column span:hover {
-          background: #ccc; }
+          background-color: #ccc; }
         #game #board .column span.selected {
-          background: #c00; }
+          background-color: #c00; }
+        #game #board .column span.replaced {
+          -webkit-animation: flash 0.5s 1 linear;
+                  animation: flash 0.5s 1 linear; }
   #game ul.current li {
     color: #00c; }
   #game ul.found li {

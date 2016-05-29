@@ -6,7 +6,7 @@
   <i ng-if="scoreStorage && scoreStorage.$$state.status !== 1" class="fa fa-spin fa-spinner fa-5x"></i>
   <div id="board">
     <div ng-repeat="column in state.board" class="column">
-      <span ng-repeat="cell in column" hm-tap="cell.select()" ng-class="{'selected': cell.selected}">
+      <span ng-repeat="cell in column" hm-tap="cell.select()" ng-class="{'selected': cell.selected, 'replaced': cell.replace}">
         {{cell.display}}
       </span>
     </div>

@@ -2,24 +2,24 @@
   'use strict';
 
   angular.module('numbleApp').factory('boardService', function() {
-    function getRandomInt(excluded) {
+    var exclude = [];
+    function getNewCellValue() {
       var maybe = Math.floor(Math.random() * 10);
-      if (excluded.indexOf(maybe) !== -1) {
-        return getRandomInt(excluded);
+      if (exclude.indexOf(maybe) !== -1) {
+        return getNewCellValue();
       }
       return maybe;
     }
 
     function getBoard(callback, layout) {
       var num = [];
-      var exclude = [];
       for (var i = 0; i <= 4; i++) {
         num.push([]);
         for (var j = 0; j <= 4; j++) {
           var myI = i;
           var myJ = j;
           var nextNum = (layout || []).shift();
-          var value = nextNum || getRandomInt(exclude);
+          var value = nextNum || getNewCellValue();
           if (value === 0) {
             exclude.push(0);
           }
@@ -48,6 +48,7 @@
 
     return {
       getBoard: getBoard,
+      getNewCellValue: getNewCellValue,
       areTouching: areTouching,
       parseLayout: parseLayout
     };
