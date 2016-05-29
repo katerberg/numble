@@ -394,8 +394,8 @@
       return answers;
     }
 
-    function getScore(number) {
-      switch (number.length - 2) {
+    function getScore(formula) {
+      switch (formula.length - 2) {
         case 3:
           return 1;
         case 4:
