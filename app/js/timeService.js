@@ -33,7 +33,7 @@
       startTimer: startTimer,
       getTime: getTime,
       setAlert: setAlert,
-      GAME_TIME: 6000
+      GAME_TIME: 60
     };
   });
 })();
