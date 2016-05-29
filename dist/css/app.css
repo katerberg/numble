@@ -34,20 +34,28 @@ body {
         transition: width 1s linear; }
   #game #board {
     font-size: 1.3em;
-    text-align: center; }
-    #game #board .row {
+    text-align: center;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: row;
+        flex-direction: row;
+    -ms-flex-pack: center;
+        justify-content: center; }
+    #game #board .column {
       display: -ms-flexbox;
-      display: flex; }
-      #game #board .row span {
+      display: flex;
+      -ms-flex-direction: column;
+          flex-direction: column; }
+      #game #board .column span {
         width: 20%;
         padding: 1em;
         display: inline-block;
         cursor: pointer;
         border-radius: 6px;
         border: 1px solid #eee; }
-        #game #board .row span:hover {
+        #game #board .column span:hover {
           background: #ccc; }
-        #game #board .row span.selected {
+        #game #board .column span.selected {
           background: #c00; }
   #game ul.current li {
     color: #00c; }
@@ -68,10 +76,8 @@ body {
 @media screen and (min-width: 350px) {
   #game #board {
     font-size: 1.5em; }
-    #game #board .row {
-      display: block; }
-      #game #board .row span {
-        width: auto; }
+    #game #board .column span {
+      width: auto; }
   #game button.undo {
     margin-top: 1em; } }
 

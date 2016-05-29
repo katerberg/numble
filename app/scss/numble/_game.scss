@@ -21,8 +21,12 @@
   #board {
     font-size: 1.3em;
     text-align: center;
-    .row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    .column {
       display: flex;
+      flex-direction: column;
       span {
         width: 20%;
         padding: 1em;
@@ -67,8 +71,7 @@
   #game {
     #board {
       font-size: 1.5em;
-      .row {
-        display: block;
+      .column {
         span {
           width: auto;
         }

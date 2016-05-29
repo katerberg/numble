@@ -32,7 +32,8 @@
     return {
       startTimer: startTimer,
       getTime: getTime,
-      setAlert: setAlert
+      setAlert: setAlert,
+      GAME_TIME: 6000
     };
   });
 })();

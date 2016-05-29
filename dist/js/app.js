@@ -77,8 +77,6 @@
         selectionService,
         winService) {
 
-    var GAME_TIME = 60;
-
     function selectVal(i, j) {
       return function() {
         select($scope.state.board[i][j]);
@@ -105,21 +103,13 @@
       });
     }
 
-    timeService.setAlert(function() {
-      $location.url('/results');
-    });
-
     $scope.state = stateService.state;
     $scope.scoreStorage = storageService.getScore($routeParams.goal);
     $scope.scoreStorage.then(function(res) {
       $scope.state.board = boardService.getBoard(selectVal, boardService.parseLayout(res ? res.layout : null));
       $scope.goal = res ? res.score : null;
-      timeService.startTimer(GAME_TIME);
+      timeService.startTimer(timeService.GAME_TIME);
     });
-    $scope.time = timeService.getTime;
-    $scope.timePercentage = function() {
-      return 100 * (timeService.getTime() - 1) / GAME_TIME;
-    };
     $scope.undo = stateService.undo;
   }]);
 })();
@@ -335,7 +325,32 @@
     return {
       startTimer: startTimer,
       getTime: getTime,
-      setAlert: setAlert
+      setAlert: setAlert,
+      GAME_TIME: 6000
+    };
+  }]);
+})();
+
+(function() {
+  'use strict';
+
+  angular.module('numbleApp').directive('numTimer', ["timeService", function(timeService) {
+    return {
+      restrict: 'E',
+      templateUrl: 'templates/timer.html',
+      scope: {
+      },
+      link: function($scope, element) {
+        var GAME_TIME = timeService.GAME_TIME;
+
+        timeService.setAlert(function() {
+          $location.url('/results');
+        });
+
+        $scope.timePercentage = function() {
+          return 100 * (timeService.getTime() - 1) / GAME_TIME;
+        };
+      }
     };
   }]);
 })();
