@@ -125,6 +125,11 @@
       $location.url('/play');
     }
 
+    function changeGameMode() {
+      stateService.resetGame();
+      $location.url('/');
+    }
+
     function getShare() {
       $scope.storage = storageService.storeScore();
       $scope.storage.then(function(res) {
@@ -133,6 +138,7 @@
     }
     $scope.score = stateService.state.score;
     $scope.startOver = startOver;
+    $scope.changeGameMode = changeGameMode;
     $scope.getShare = getShare;
   }]);
 })();

@@ -34,6 +34,25 @@ describe('ResultsCtrl', function() {
       expect($scope).toBeDefined();
     });
 
+    describe('#changeGameMode()', function() {
+      beforeEach(function() {
+        spyOn(stateService, 'resetGame');
+        spyOn($location, 'url');
+      });
+
+      it('goes back to game page', function() {
+        $scope.changeGameMode();
+
+        expect($location.url).toHaveBeenCalledWith('/');
+      });
+
+      it('resets state', function() {
+        $scope.changeGameMode();
+
+        expect(stateService.resetGame).toHaveBeenCalled();
+      });
+    });
+
     describe('#startOver()', function() {
       beforeEach(function() {
         spyOn(stateService, 'resetGame');
