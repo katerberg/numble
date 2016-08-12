@@ -1,16 +1,16 @@
-(function() {
+'use strict';
+
+(function () {
   'use strict';
 
-  var numbleApp = angular.module('numbleApp', [
-      'ngRoute',
-      'angular-gestures'
-  ]);
+  var numbleApp = angular.module('numbleApp', ['ngRoute', 'angular-gestures']);
 })();
+'use strict';
 
-(function() {
+(function () {
   'use strict';
 
-  angular.module('numbleApp').factory('boardService', function() {
+  angular.module('numbleApp').factory('boardService', function () {
     var exclude = [];
     function getNewCellValue() {
       var maybe = Math.floor(Math.random() * 10);
@@ -63,21 +63,15 @@
     };
   });
 })();
+'use strict';
 
-
-(function() {
+(function () {
   'use strict';
 
-  angular.module('numbleApp').controller('GameCtrl', ["$scope", "$routeParams", "stateService", "storageService", "boardService", "timeService", "selectionService", function($scope,
-        $routeParams,
-        stateService,
-        storageService,
-        boardService,
-        timeService,
-        selectionService) {
+  angular.module('numbleApp').controller('GameCtrl', ["$scope", "$routeParams", "stateService", "storageService", "boardService", "timeService", "selectionService", function ($scope, $routeParams, stateService, storageService, boardService, timeService, selectionService) {
 
     function selectVal(i, j) {
-      return function() {
+      return function () {
         select($scope.state.board[i][j]);
       };
     }
@@ -93,7 +87,7 @@
 
     $scope.state = stateService.state;
     $scope.scoreStorage = storageService.getScore($routeParams.goal);
-    $scope.scoreStorage.then(function(res) {
+    $scope.scoreStorage.then(function (res) {
       $scope.state.board = boardService.getBoard(selectVal, boardService.parseLayout(res ? res.layout : null));
       $scope.goal = res ? res.score : null;
       timeService.startTimer(timeService.GAME_TIME);
@@ -101,24 +95,22 @@
     $scope.undo = stateService.undo;
   }]);
 })();
+'use strict';
 
-(function() {
+(function () {
   'use strict';
-  angular.module('numbleApp').config(["hammerDefaultOptsProvider", function(hammerDefaultOptsProvider) {
-    var hammerOptions = {recognizers: [
-      [Hammer.Tap, {time: 250}]
-    ]};
+
+  angular.module('numbleApp').config(["hammerDefaultOptsProvider", function (hammerDefaultOptsProvider) {
+    var hammerOptions = { recognizers: [[Hammer.Tap, { time: 250 }]] };
     hammerDefaultOptsProvider.set(hammerOptions);
   }]);
 })();
+'use strict';
 
-(function() {
+(function () {
   'use strict';
 
-  angular.module('numbleApp').controller('ResultsCtrl', ["$scope", "stateService", "storageService", "$location", function($scope,
-      stateService,
-      storageService,
-      $location) {
+  angular.module('numbleApp').controller('ResultsCtrl', ["$scope", "stateService", "storageService", "$location", function ($scope, stateService, storageService, $location) {
 
     function startOver() {
       stateService.resetGame();
@@ -132,7 +124,7 @@
 
     function getShare() {
       $scope.storage = storageService.storeScore();
-      $scope.storage.then(function(res) {
+      $scope.storage.then(function (res) {
         $scope.shareId = res.name;
       });
     }
@@ -142,36 +134,35 @@
     $scope.getShare = getShare;
   }]);
 })();
+'use strict';
 
-(function() {
+(function () {
   'use strict';
-  angular.module('numbleApp').config(["$routeProvider", function($routeProvider) {
-    $routeProvider.
-      when('/', {
-        templateUrl: 'partials/start.html',
-        controller: 'StartCtrl'
-      }).
-    when('/play', {
+
+  angular.module('numbleApp').config(["$routeProvider", function ($routeProvider) {
+    $routeProvider.when('/', {
+      templateUrl: 'partials/start.html',
+      controller: 'StartCtrl'
+    }).when('/play', {
       templateUrl: 'partials/game.html',
       controller: 'GameCtrl'
-    }).
-    when('/results', {
+    }).when('/results', {
       templateUrl: 'partials/results.html',
       controller: 'ResultsCtrl'
-    }).
-    otherwise({
+    }).otherwise({
       redirectTo: '/'
     });
   }]);
 })();
+'use strict';
 
-(function() {
+(function () {
   'use strict';
 
-  angular.module('numbleApp').directive('numSelect', ["$window", function($window) {
+  angular.module('numbleApp').directive('numSelect', ["$window", function ($window) {
     return {
       restrict: 'A',
-      link: function(scope, element) {
+      link: function link(scope, element) {
         var selection = $window.getSelection();
         var range = document.createRange();
         range.selectNodeContents(element[0]);
@@ -181,24 +172,22 @@
     };
   }]);
 })();
+'use strict';
 
-(function() {
+(function () {
   'use strict';
 
-  angular.module('numbleApp').factory('selectionService', ["boardService", "winService", "stateService", "timeService", function(boardService,
-        winService,
-        stateService,
-        timeService) {
+  angular.module('numbleApp').factory('selectionService', ["boardService", "winService", "stateService", "timeService", function (boardService, winService, stateService, timeService) {
     function makeSelection(item) {
       item.selected = true;
       stateService.state.selected.push(item);
-      var values = stateService.state.selected.map(function(val) {
+      var values = stateService.state.selected.map(function (val) {
         return val.display;
       });
       var valid = winService.check(values);
-      valid.forEach(function(val) {
+      valid.forEach(function (val) {
         if (stateService.state.found.indexOf(val) === -1) {
-          stateService.state.selected.forEach(function(selected) {
+          stateService.state.selected.forEach(function (selected) {
             selected.replace = true;
             if (stateService.state.mode === 'rotating') {
               selected.display = boardService.getNewCellValue();
@@ -231,11 +220,12 @@
     };
   }]);
 })();
+'use strict';
 
-(function() {
+(function () {
   'use strict';
 
-  angular.module('numbleApp').controller('StartCtrl', ["$scope", "$location", "stateService", function($scope, $location, stateService) {
+  angular.module('numbleApp').controller('StartCtrl', ["$scope", "$location", "stateService", function ($scope, $location, stateService) {
     function start(gameMode) {
       stateService.state.mode = gameMode;
       $location.url('/play');
@@ -244,11 +234,12 @@
     $scope.start = start;
   }]);
 })();
+'use strict';
 
-(function() {
+(function () {
   'use strict';
 
-  angular.module('numbleApp').factory('stateService', function() {
+  angular.module('numbleApp').factory('stateService', function () {
     var state = {
       board: [],
       selected: [],
@@ -258,7 +249,7 @@
     };
 
     function undo() {
-      state.selected.forEach(function(item) {
+      state.selected.forEach(function (item) {
         item.selected = false;
       });
       state.selected.length = 0;
@@ -277,16 +268,17 @@
     };
   });
 })();
+'use strict';
 
-(function() {
+(function () {
   'use strict';
 
-  angular.module('numbleApp').factory('storageService', ["$http", "$q", "stateService", function($http, $q, stateService) {
+  angular.module('numbleApp').factory('storageService', ["$http", "$q", "stateService", function ($http, $q, stateService) {
     var GAMES_URL = 'https://project-8921628173750252600.firebaseio.com/games';
 
     function storeScore() {
-      var displayVals = stateService.state.board.reduce(function(prevArr, arr) {
-        return prevArr + arr.reduce(function(prevItem, item) {
+      var displayVals = stateService.state.board.reduce(function (prevArr, arr) {
+        return prevArr + arr.reduce(function (prevItem, item) {
           return prevItem + item.display + ',';
         }, '');
       }, '');
@@ -294,14 +286,14 @@
         score: stateService.state.score,
         values: displayVals.substring(0, displayVals.length - 1)
       };
-      return $http.post(GAMES_URL + '.json', storage).then(function(res) {
+      return $http.post(GAMES_URL + '.json', storage).then(function (res) {
         return res.data;
       });
     }
 
     function getScore(key) {
       if (key) {
-        return $http.get(GAMES_URL + '/' + key + '.json').then(function(res) {
+        return $http.get(GAMES_URL + '/' + key + '.json').then(function (res) {
           return res.data;
         });
       } else {
@@ -315,13 +307,14 @@
     };
   }]);
 })();
+'use strict';
 
-(function() {
+(function () {
   'use strict';
 
-  angular.module('numbleApp').factory('timeService', ["$timeout", function($timeout) {
+  angular.module('numbleApp').factory('timeService', ["$timeout", function ($timeout) {
     var timeRemaining,
-    callbacks =  [];
+        callbacks = [];
 
     function tickFn() {
       timeRemaining--;
@@ -360,34 +353,36 @@
     };
   }]);
 })();
+'use strict';
 
-(function() {
+(function () {
   'use strict';
 
-  angular.module('numbleApp').directive('numTimer', ["timeService", "$location", function(timeService, $location) {
+  angular.module('numbleApp').directive('numTimer', ["timeService", "$location", function (timeService, $location) {
     return {
       restrict: 'E',
       templateUrl: 'templates/timer.html',
       scope: {},
-      link: function($scope, element) {
+      link: function link($scope, element) {
         var GAME_TIME = timeService.GAME_TIME;
 
-        timeService.setAlert(function() {
+        timeService.setAlert(function () {
           $location.url('/results');
         });
 
-        $scope.timePercentage = function() {
+        $scope.timePercentage = function () {
           return 100 * (timeService.getTime() - 1) / GAME_TIME;
         };
       }
     };
   }]);
 })();
+'use strict';
 
-(function() {
+(function () {
   'use strict';
 
-  angular.module('numbleApp').factory('winService', function() {
+  angular.module('numbleApp').factory('winService', function () {
     function isAddable(one, two, result) {
       return one + two === result;
     }
@@ -397,10 +392,12 @@
 
     function checkForN(selected) {
       var len = selected.length,
-        max = len - 1;
+          max = len - 1;
       var answers = [];
-      for (var n = 1; n < max; n++) { // end of first number
-        for (var i = max - n; i > 0; i--) { // end of second number
+      for (var n = 1; n < max; n++) {
+        // end of first number
+        for (var i = max - n; i > 0; i--) {
+          // end of second number
           var firstNum, secondNum, thirdNum;
           firstNum = secondNum = thirdNum = 0;
           for (var first = n - 1; first >= 0; first--) {

@@ -20,6 +20,28 @@ module.exports = function(config) {
       'app/js/**/*.js'
     ],
 
+    preprocessors: {
+        'app/js/**/*.test.js': 'babel'
+    },
+    babelPreprocessor: {
+        options: {
+            presets: ['es2015'],
+            sourceMap: 'inline'
+        },
+        filename: function (file) {
+            return file.originalPath.replace(/\.js$/, '.es5.js');
+        },
+        sourceFileName: function (file) {
+            return file.originalPath;
+        }
+    },
+
+    plugins: [
+        require('./node_modules/karma-jasmine'),
+        require('./node_modules/karma-phantomjs-launcher'),
+        require('./node_modules/karma-babel-preprocessor')
+    ],
+
     // list of files / patterns to exclude
     exclude: [],
 

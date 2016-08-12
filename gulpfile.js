@@ -10,6 +10,7 @@ var jshint = require('gulp-jshint'),
     concat = require('gulp-concat'),
     uglify = require('gulp-uglify'),
     ngAnnotate = require('gulp-ng-annotate'),
+    babel = require('gulp-babel'),
     rename = require('gulp-rename');
 
 var basedir = 'app/';
@@ -45,6 +46,10 @@ gulp.task('sass', function() {
 // Concatenate & Minify JS
 gulp.task('scripts', function() {
     return gulp.src([basedir + 'js/**/*.js', '!' + basedir + 'js/**/*.test.js'])
+        .pipe(babel({
+            presets: ['es2015'],
+            plugins: ["syntax-decorators", "ng-annotate"]
+        }))
         .pipe(ngAnnotate())
         .pipe(concat('app.js'))
         .pipe(gulp.dest('dist/js'))
