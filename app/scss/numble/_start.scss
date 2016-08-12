@@ -1,0 +1,11 @@
+#start {
+  button {
+    border: 1px solid #fff;
+    background-color: $start-button-bg;
+    color: $start-button-fg;
+    &:hover {
+      background-color: $start-button-fg;
+      color: $start-button-bg;
+    }
+  }
+}

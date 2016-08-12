@@ -13,7 +13,19 @@ button {
   margin: 8px 0 8px; }
 
 body {
-  font-family: Cantarell; }
+  font-family: Cantarell;
+  background-color: #ca77fa; }
+
+h1 {
+  color: #3b1f4d; }
+
+#start button {
+  border: 1px solid #fff;
+  background-color: #4a2862;
+  color: #ca77fa; }
+  #start button:hover {
+    background-color: #ca77fa;
+    color: #4a2862; }
 
 @-webkit-keyframes flash {
   0% {

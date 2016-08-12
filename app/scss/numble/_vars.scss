@@ -1,1 +1,16 @@
 $breakpoint-min-width: 350px;
+
+//Colors
+$purple-rarest: #ca77fa;
+$purple-rare: #b36ae1;
+$purple-medium-rare: #9752c5;
+$purple-medium: #773f9b;
+$purple-medium-well: #5f327c;
+$purple-well: #4a2862;
+$purple-wellest: #3b1f4d;
+
+//Color Usages
+$background-color: $purple-rarest;
+$title-color: $purple-wellest;
+$start-button-bg: $purple-well;
+$start-button-fg: $purple-rarest;
