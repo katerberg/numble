@@ -17,3 +17,10 @@ To test the application after instal karma-cli globally, run the following:
 ```
 karma start
 ```
+
+
+##Known Issues
+
+* Continuous Mode will auto-select first valid move. It should allow user to choose whether to use move or keep selecting longer string
+* Should be an indication of what formula was valid after selected
+* There should be some kind of color scheme
