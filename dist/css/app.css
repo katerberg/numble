@@ -13,19 +13,28 @@ button {
   margin: 8px 0 8px; }
 
 body {
-  font-family: Cantarell;
-  background-color: #ca77fa; }
+  font-family: Cantarell; }
 
 h1 {
   color: #3b1f4d; }
 
-#start button {
-  border: 1px solid #fff;
-  background-color: #4a2862;
-  color: #ca77fa; }
-  #start button:hover {
-    background-color: #ca77fa;
-    color: #4a2862; }
+.content {
+  padding: 0.5em;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: calc(100vh - 1em);
+  width: calc(100vw - 1em); }
+
+#start {
+  background-color: #ca77fa; }
+  #start button {
+    border: 1px solid #fff;
+    background-color: #4a2862;
+    color: #ca77fa; }
+    #start button:hover {
+      background-color: #ca77fa;
+      color: #4a2862; }
 
 @-webkit-keyframes flash {
   0% {
@@ -48,21 +57,24 @@ h1 {
     color: #000; } }
 
 #game {
-  text-align: center; }
+  text-align: center;
+  background-color: #ca77fa; }
   #game header {
     text-align: left; }
+    #game header h1 {
+      margin-bottom: 0.5em; }
     #game header div.time-container {
       width: 100%;
       height: 25px;
-      margin: 0;
-      background-color: #333;
+      margin: 0 0 0.5em;
+      background-color: #4a2862;
       position: relative; }
       #game header div.time-container div.time-left {
         position: absolute;
         top: 0;
         left: 0;
         height: 100%;
-        background-color: tomato;
+        background-color: #0c9d7c;
         transition: width 1s linear; }
   #game #board {
     font-size: 1.3em;
@@ -79,16 +91,19 @@ h1 {
       -ms-flex-direction: column;
           flex-direction: column; }
       #game #board .column span {
+        color: #3b1f4d;
+        background-color: #11dcad;
         width: 20%;
         padding: 1em;
         display: inline-block;
         cursor: pointer;
         border-radius: 6px;
-        border: 1px solid #eee; }
+        border: 1px solid #3b1f4d; }
         #game #board .column span:hover {
-          background-color: #ccc; }
+          background-color: #11edba; }
         #game #board .column span.selected {
-          background-color: #c00; }
+          background-color: #5f327c;
+          color: #ca77fa; }
         #game #board .column span.replaced {
           -webkit-animation: flash 0.5s 1 linear;
                   animation: flash 0.5s 1 linear; }
@@ -98,11 +113,15 @@ h1 {
     color: #0c0; }
   #game button.undo {
     width: calc(6em + 96px);
-    background-color: tomato;
+    background-color: #0c9d7c;
+    color: #11edba;
     border: none;
     border-radius: 4px;
     font-size: 1.8em;
     margin-top: 0.2em; }
+    #game button.undo:hover {
+      background-color: #0dad88;
+      cursor: pointer; }
   #game .goal {
     color: tomato; }
     #game .goal.beaten {
