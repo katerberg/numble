@@ -38,23 +38,25 @@ h1 {
 
 @-webkit-keyframes flash {
   0% {
-    background-color: #c00;
-    color: #000; }
+    background-color: #0ebd94;
+    color: #3b1f4d; }
   50% {
-    color: #dd7777; }
-  100% {
     background-color: #fff;
-    color: #000; } }
+    color: #0c9d7c; }
+  100% {
+    background-color: #4a2862;
+    color: #fff; } }
 
 @keyframes flash {
   0% {
-    background-color: #c00;
-    color: #000; }
+    background-color: #0ebd94;
+    color: #3b1f4d; }
   50% {
-    color: #dd7777; }
-  100% {
     background-color: #fff;
-    color: #000; } }
+    color: #0c9d7c; }
+  100% {
+    background-color: #4a2862;
+    color: #fff; } }
 
 #game {
   text-align: center;
@@ -125,7 +127,7 @@ h1 {
   #game .goal {
     color: #fff; }
     #game .goal.beaten {
-      color: lime; }
+      color: #11edba; }
 
 @media screen and (min-width: 350px) {
   #game #board {

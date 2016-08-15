@@ -1,14 +1,15 @@
 @keyframes flash {
   0% {
-    background-color: #c00;
-    color: #000;
+    background-color: $board-color-bg-selected;
+    color: $board-color-fg-selected;
   }
   50% {
-    color: #dd7777;
+    background-color: $board-color-bg-flash;
+    color: $board-color-fg-flash;
   }
   100% {
-    background-color: #fff;
-    color: #000;
+    background-color: $board-color-bg;
+    color: $board-color-fg;
   }
 }
 
@@ -89,9 +90,9 @@
     }
   }
   .goal {
-    color: $goal-fg;
+    color: $goal-unbeaten;
     &.beaten {
-      color: lime;
+      color: $goal-beaten;
     }
   }
 }
