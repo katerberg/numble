@@ -143,6 +143,9 @@
     $routeProvider.when('/', {
       templateUrl: 'partials/start.html',
       controller: 'StartCtrl'
+    }).when('/tutorial', {
+      templateUrl: 'partials/tutorial.html',
+      controller: 'TutorialCtrl'
     }).when('/play', {
       templateUrl: 'partials/game.html',
       controller: 'GameCtrl'
@@ -231,7 +234,12 @@
       $location.url('/play');
     }
 
+    function goTo(url) {
+      $location.url('/' + url);
+    }
+
     $scope.start = start;
+    $scope.goTo = goTo;
   }]);
 })();
 'use strict';
@@ -375,6 +383,34 @@
         };
       }
     };
+  }]);
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('numbleApp').controller('TutorialCtrl', ["$scope", "stateService", "storageService", "boardService", "timeService", "selectionService", function ($scope, stateService, storageService, boardService, timeService, selectionService) {
+
+    function selectVal(i, j) {
+      return function () {
+        select($scope.state.board[i][j]);
+      };
+    }
+
+    function select(item) {
+      var state = stateService.state;
+      if (!selectionService.isValidMove(item, state.selected)) {
+        return;
+      }
+      item.replace = false;
+      selectionService.makeSelection(item);
+    }
+
+    $scope.state = stateService.state;
+    $scope.scoreStorage = storageService.getScore();
+    $scope.state.board = boardService.getBoard(selectVal, boardService.parseLayout());
+    $scope.undo = stateService.undo;
   }]);
 })();
 'use strict';

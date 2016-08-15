@@ -32,6 +32,8 @@ h1 {
     border: 1px solid #fff;
     background-color: #0F3C37;
     color: #fff; }
+    #start button.tutorial {
+      background-color: #19655c; }
     #start button:hover {
       border: 1px solid #0c9d7c;
       background-color: #fff;

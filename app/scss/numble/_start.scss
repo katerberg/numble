@@ -4,6 +4,9 @@
     border: 1px solid $start-button-border;
     background-color: $start-button-bg;
     color: $start-button-fg;
+    &.tutorial {
+      background-color: lighten($start-button-bg, 10%);
+    }
     &:hover {
       border: 1px solid $start-button-border-hover;
       background-color: $start-button-bg-hover;

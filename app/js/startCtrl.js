@@ -7,6 +7,11 @@
       $location.url('/play');
     }
 
+    function goTo(url) {
+      $location.url('/' + url);
+    }
+
     $scope.start = start;
+    $scope.goTo = goTo;
   });
 })();
