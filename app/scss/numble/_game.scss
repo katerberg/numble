@@ -89,7 +89,7 @@
     }
   }
   .goal {
-    color: tomato;
+    color: $goal-fg;
     &.beaten {
       color: lime;
     }

@@ -123,7 +123,7 @@ h1 {
       background-color: #0dad88;
       cursor: pointer; }
   #game .goal {
-    color: tomato; }
+    color: #fff; }
     #game .goal.beaten {
       color: lime; }
 
