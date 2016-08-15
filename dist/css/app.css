@@ -91,19 +91,19 @@ h1 {
       -ms-flex-direction: column;
           flex-direction: column; }
       #game #board .column span {
-        color: #3b1f4d;
-        background-color: #11dcad;
+        color: #fff;
+        background-color: #4a2862;
         width: 20%;
         padding: 1em;
         display: inline-block;
         cursor: pointer;
         border-radius: 6px;
-        border: 1px solid #3b1f4d; }
+        border: 1px solid #773f9b; }
         #game #board .column span:hover {
-          background-color: #11edba; }
+          background-color: #3b1f4d; }
         #game #board .column span.selected {
-          background-color: #5f327c;
-          color: #fff; }
+          background-color: #0ebd94;
+          color: #3b1f4d; }
         #game #board .column span.replaced {
           -webkit-animation: flash 0.5s 1 linear;
                   animation: flash 0.5s 1 linear; }
@@ -114,8 +114,8 @@ h1 {
   #game button.undo {
     width: calc(6em + 96px);
     background-color: #0c9d7c;
-    color: #11edba;
-    border: none;
+    color: #fff;
+    border: 1px solid #4a2862;
     border-radius: 4px;
     font-size: 1.8em;
     margin-top: 0.2em; }

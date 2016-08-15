@@ -79,7 +79,7 @@
     width: calc(6em + 96px);
     background-color: $undo-button-bg;
     color: $undo-button-fg;
-    border: none;
+    border: 1px solid $undo-button-border;
     border-radius: 4px;
     font-size: 1.8em;
     margin-top: 0.2em;
