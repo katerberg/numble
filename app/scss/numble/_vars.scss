@@ -19,11 +19,16 @@ $aqua-well: #0c9d7c;
 $aqua-wellest: #0F3C37;
 
 //Color Usages
-$start-background-color: $purple-rarest;
-$game-background-color: $aqua-wellest;
+$start-background-color: $aqua-rarest;
+$game-background-color: $purple-rarest;
+$results-background-color: $aqua-rarest;
 $title-color: $purple-wellest;
-$start-button-bg: $purple-well;
+$start-button-border: $white;
+$start-button-bg: $aqua-wellest;
 $start-button-fg: $white;
+$start-button-border-hover: $aqua-well;
+$start-button-bg-hover: $white;
+$start-button-fg-hover: $aqua-wellest;
 $board-border: $purple-medium;
 $board-color-fg: $white;
 $board-color-bg: $purple-well;

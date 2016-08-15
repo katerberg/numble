@@ -1,12 +1,13 @@
 #start {
   background-color: $start-background-color;
   button {
-    border: 1px solid #fff;
+    border: 1px solid $start-button-border;
     background-color: $start-button-bg;
     color: $start-button-fg;
     &:hover {
-      background-color: $start-button-fg;
-      color: $start-button-bg;
+      border: 1px solid $start-button-border-hover;
+      background-color: $start-button-bg-hover;
+      color: $start-button-fg-hover;
     }
   }
 }
