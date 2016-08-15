@@ -1,13 +1,22 @@
 #results {
   background-color: $results-background-color;
+  h1,i {
+    color: $results-header-fg;
+  }
   h2 {
     display: inline-block;
   }
   input {
     width: 100%;
   }
-  a {
-    @include button();
+  button {
+    border: 1px solid $results-button-border;
+    background-color: $results-button-bg;
+    color: $results-button-fg;
+    &:hover {
+      background-color: $results-button-bg-hover;
+      color: $results-button-fg-hover;
+    }
   }
   .challenge-loader {
     font-size: 3em;

@@ -17,11 +17,14 @@ $aqua-medium: #0ebd94;
 $aqua-medium-well: #0dad88;
 $aqua-well: #0c9d7c;
 $aqua-wellest: #0F3C37;
+$rose-quartz: #F7CAC9;
+$peach-echo: #f7786b;
+$chestnut: #402619;
 
 //Color Usages
 $start-background-color: $aqua-rarest;
 $game-background-color: $purple-rarest;
-$results-background-color: $aqua-rarest;
+$results-background-color: $rose-quartz;
 $title-color: $purple-wellest;
 $start-button-border: $white;
 $start-button-bg: $aqua-wellest;
@@ -46,3 +49,9 @@ $goal-unbeaten: $white;
 $goal-beaten: $aqua-rarest;
 $board-color-bg-flash: $white;
 $board-color-fg-flash: $aqua-well;
+$results-header-fg: $chestnut;
+$results-button-border: $chestnut;
+$results-button-bg: $peach-echo;
+$results-button-fg: $chestnut;
+$results-button-bg-hover: $chestnut;
+$results-button-fg-hover: $peach-echo;
