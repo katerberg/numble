@@ -1,6 +1,8 @@
 $breakpoint-min-width: 350px;
 
 //Colors
+$black: #000;
+$white: #fff;
 $purple-rarest: #ca77fa;
 $purple-rare: #b36ae1;
 $purple-medium-rare: #9752c5;
@@ -21,12 +23,12 @@ $start-background-color: $purple-rarest;
 $game-background-color: $aqua-wellest;
 $title-color: $purple-wellest;
 $start-button-bg: $purple-well;
-$start-button-fg: $purple-rarest;
+$start-button-fg: $white;
 $board-border: $purple-wellest;
 $board-color-fg: $purple-wellest;
 $board-color-bg: $aqua-rare;
 $board-color-bg-hover: $aqua-rarest;
-$board-color-fg-selected: $purple-rarest;
+$board-color-fg-selected: $white;
 $board-color-bg-selected: $purple-medium-well;
 $timer-bg: $purple-well;
 $timer-fg: $aqua-well;

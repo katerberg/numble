@@ -31,9 +31,9 @@ h1 {
   #start button {
     border: 1px solid #fff;
     background-color: #4a2862;
-    color: #ca77fa; }
+    color: #fff; }
     #start button:hover {
-      background-color: #ca77fa;
+      background-color: #fff;
       color: #4a2862; }
 
 @-webkit-keyframes flash {
@@ -103,7 +103,7 @@ h1 {
           background-color: #11edba; }
         #game #board .column span.selected {
           background-color: #5f327c;
-          color: #ca77fa; }
+          color: #fff; }
         #game #board .column span.replaced {
           -webkit-animation: flash 0.5s 1 linear;
                   animation: flash 0.5s 1 linear; }
