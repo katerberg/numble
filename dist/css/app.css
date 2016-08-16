@@ -159,5 +159,5 @@ h1 {
   #results .challenge-loader {
     font-size: 3em; }
 
-.introjs-tooltip .introjs-prevbutton {
+.introjs-tooltip .introjs-prevbutton, .introjs-tooltip .introjs-skipbutton {
   display: none; }
