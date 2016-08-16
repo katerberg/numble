@@ -50,5 +50,20 @@ describe('timeService', function() {
 
     expect(instance.getTime()).toEqual(13);
   });
+
+  it('can be reset', () => {
+    let alerted;
+    instance.startTimer(1);
+    instance.setAlert(function() {
+      alerted = true;
+      done();
+    });
+
+    instance.resetTimer();
+
+    expect(instance.getTime()).toEqual(0);
+    $timeout.flush(1000);
+    expect(alerted).toBeFalsy();
+  });
 });
 })();

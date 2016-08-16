@@ -338,6 +338,11 @@
       $timeout(tickFn, 1000);
     }
 
+    function resetTimer() {
+      timeRemaining = 0;
+      callbacks.length = 0;
+    }
+
     function getTime() {
       return timeRemaining;
     }
@@ -353,6 +358,7 @@
     return {
       addTime: addTime,
       getTime: getTime,
+      resetTimer: resetTimer,
       setAlert: setAlert,
       startTimer: startTimer,
       GAME_TIME: 60
@@ -444,7 +450,7 @@
       showStepNumbers: false,
       showBullets: false,
       disableInteraction: true,
-      keyboardNavigation: false,
+      keyboardNavigation: true,
       exitOnEsc: false,
       exitOnOverlayClick: false
     };
@@ -498,6 +504,7 @@
           timeService.startTimer(timeService.GAME_TIME);
           break;
         case 15:
+          timeService.resetTimer();
           $location.url('/');
           break;
       }

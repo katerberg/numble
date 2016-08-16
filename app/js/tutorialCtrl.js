@@ -1,4 +1,4 @@
-(() => {
+(function() {
   'use strict';
 
   angular.module('numbleApp').controller('TutorialCtrl', function($scope,
@@ -64,7 +64,7 @@
       showStepNumbers: false,
       showBullets: false,
       disableInteraction: true,
-      keyboardNavigation: false,
+      keyboardNavigation: true,
       exitOnEsc: false,
       exitOnOverlayClick: false
     };
@@ -118,6 +118,7 @@
           timeService.startTimer(timeService.GAME_TIME);
           break;
         case 15:
+          timeService.resetTimer();
           $location.url('/');
           break;
       }

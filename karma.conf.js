@@ -14,6 +14,8 @@ module.exports = function(config) {
       'node_modules/angular/angular.js',
       'node_modules/angular-route/angular-route.js',
       'node_modules/angular-mocks/angular-mocks.js',
+      'node_modules/angular-intro.js/build/angular-intro.min.js',
+      'node_modules/intro.js/minified/intro.min.js',
       'bower_components/hammerjs/hammer.min.js',
       'bower_components/angular-gestures/gestures.min.js',
       'app/js/app.js',
@@ -21,7 +23,8 @@ module.exports = function(config) {
     ],
 
     preprocessors: {
-        'app/js/**/*.test.js': 'babel'
+        'app/js/app.js': 'babel',
+        'app/js/**/*.js': 'babel'
     },
     babelPreprocessor: {
         options: {
