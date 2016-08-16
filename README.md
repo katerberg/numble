@@ -23,4 +23,3 @@ karma start
 
 * Continuous Mode will auto-select first valid move. It should allow user to choose whether to use move or keep selecting longer string
 * Should be an indication of what formula was valid after selected
-* Should be an introduction to how the game works
