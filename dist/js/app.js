@@ -437,6 +437,9 @@
       }, {
         element: '#game header',
         intro: 'Time flies like an arrow, but fruit flies like a banana! Go have fun!'
+      }, {
+        element: '#game header',
+        intro: ''
       }],
       showStepNumbers: false,
       showBullets: false,
@@ -494,7 +497,7 @@
         case 13:
           timeService.startTimer(timeService.GAME_TIME);
           break;
-        case 14:
+        case 15:
           $location.url('/');
           break;
       }
