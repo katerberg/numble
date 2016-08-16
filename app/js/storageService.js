@@ -12,7 +12,8 @@
       }, '');
       var storage = {
         score: stateService.state.score,
-        values: displayVals.substring(0, displayVals.length - 1)
+        values: displayVals.substring(0, displayVals.length - 1),
+        date: new Date() + ''
       };
       return $http.post(GAMES_URL + '.json', storage).then(function(res) {
         return res.data;
