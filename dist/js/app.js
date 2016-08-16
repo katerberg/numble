@@ -443,7 +443,9 @@
         // end of first number
         for (var i = max - n; i > 0; i--) {
           // end of second number
-          var firstNum, secondNum, thirdNum;
+          var firstNum = void 0,
+              secondNum = void 0,
+              thirdNum = void 0;
           firstNum = secondNum = thirdNum = 0;
           for (var first = n - 1; first >= 0; first--) {
             firstNum += selected[n - first - 1] * Math.pow(10, first);

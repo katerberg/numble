@@ -10,20 +10,20 @@
     }
 
     function checkForN(selected) {
-      var len = selected.length,
+      const len = selected.length,
         max = len - 1;
-      var answers = [];
-      for (var n = 1; n < max; n++) { // end of first number
-        for (var i = max - n; i > 0; i--) { // end of second number
-          var firstNum, secondNum, thirdNum;
+      const answers = [];
+      for (let n = 1; n < max; n++) { // end of first number
+        for (let i = max - n; i > 0; i--) { // end of second number
+          let firstNum, secondNum, thirdNum;
           firstNum = secondNum = thirdNum = 0;
-          for (var first = n - 1; first >= 0; first--) {
+          for (let first = n - 1; first >= 0; first--) {
             firstNum += selected[n - first - 1] * Math.pow(10, first);
           }
-          for (var second = i - 1; second >= 0; second--) {
+          for (let second = i - 1; second >= 0; second--) {
             secondNum += selected[i - second - 1 + n] * Math.pow(10, second);
           }
-          for (var third = i + n; third < len; third++) {
+          for (let third = i + n; third < len; third++) {
             thirdNum += selected[third] * Math.pow(10, len - third - 1);
           }
           if (isAddable(firstNum, secondNum, thirdNum)) {
