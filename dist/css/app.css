@@ -158,3 +158,6 @@ h1 {
       color: #f7786b; }
   #results .challenge-loader {
     font-size: 3em; }
+
+.introjs-tooltip .introjs-prevbutton {
+  display: none; }

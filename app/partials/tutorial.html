@@ -1,4 +1,4 @@
-<div id="game" class="content" ng-intro-options="tutorialOptions" ng-intro-method="startIntro" ng-intro-autostart="true" ng-intro-autorefresh="true">
+<div id="game" class="content" ng-intro-options="tutorialOptions" ng-intro-method="startIntro" ng-intro-autostart="true" ng-intro-autorefresh="true" ng-intro-onafterchange="afterChange">
   <header ng-click="startIntro()">
     <h1>Score: {{state.score}}</h1>
     <num-timer></num-timer>
