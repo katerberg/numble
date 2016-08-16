@@ -1,7 +1,18 @@
 {
-    "quotmark": "single",
+    "bitwise": true,
+    "curly": true,
     "devel": false,
-
-    // Custom Globals
-    "globals" : {} // additional predefined global variables
+    "eqeqeq": true,
+    "esversion": 6,
+    "forin": true,
+    "freeze": true,
+    "futurehostile": true,
+    "jasmine": true,
+    "latedef": true,
+    "noarg": true,
+    "nocomma": true,
+    "nonbsp": true,
+    "nonew": true,
+    "unused": true,
+    "strict": true
 }
