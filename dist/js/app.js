@@ -439,7 +439,11 @@
         intro: 'Time flies like an arrow, but fruit flies like a banana! Go have fun!'
       }],
       showStepNumbers: false,
-      showBullets: false
+      showBullets: false,
+      disableInteraction: true,
+      keyboardNavigation: false,
+      exitOnEsc: false,
+      exitOnOverlayClick: false
     };
 
     function select(item) {
