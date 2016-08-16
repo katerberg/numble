@@ -25,8 +25,9 @@ gulp.task('lint', function() {
 
 // Move dependent CSS
 gulp.task('dependentCss', function() {
-    return gulp.src('bower_components/font-awesome/css/font-awesome.min.css')
-        .pipe(gulp.dest('dist/css'));
+    return gulp.src(['bower_components/font-awesome/css/font-awesome.min.css',
+      'node_modules/intro.js/minified/introjs.min.css'])
+      .pipe(gulp.dest('dist/css'));
 });
 
 // Move fonts
@@ -64,6 +65,8 @@ gulp.task('dependentJs', function() {
       'node_modules/angular/angular.min.js',
       'node_modules/angular-resource/angular-resource.min.js',
       'node_modules/angular-route/angular-route.min.js',
+      'node_modules/angular-intro.js/build/angular-intro.min.js',
+      'node_modules/intro.js/minified/intro.min.js',
       'bower_components/hammerjs/hammer.min.js',
       'bower_components/angular-gestures/gestures.min.js'
     ])

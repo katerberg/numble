@@ -1,9 +1,9 @@
 'use strict';
 
 (function () {
-  'use strict';
+    'use strict';
 
-  angular.module('numbleApp', ['ngRoute', 'angular-gestures']);
+    angular.module('numbleApp', ['ngRoute', 'angular-intro', 'angular-gestures']);
 })();
 'use strict';
 
@@ -405,10 +405,18 @@
       };
     }
 
+    var introOptions = {
+      steps: [{
+        element: '#board',
+        intro: 'This is the board'
+      }]
+    };
+
     $scope.state = stateService.state;
     $scope.scoreStorage = storageService.getScore();
     $scope.state.board = boardService.getBoard(selectVal, tutorialService.grid);
     $scope.undo = stateService.undo;
+    $scope.tutorialOptions = introOptions;
   }]);
 })();
 'use strict';

@@ -3,6 +3,7 @@
 
   angular.module('numbleApp', [
       'ngRoute',
+      'angular-intro',
       'angular-gestures'
   ]);
 })();

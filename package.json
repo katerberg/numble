@@ -39,6 +39,7 @@
     "angular-intro.js": "^2.0.3",
     "angular-resource": "^1.5.5",
     "angular-route": "^1.5.5",
-    "fastclick": "^1.0.6"
+    "fastclick": "^1.0.6",
+    "intro.js": "^2.2.0"
   }
 }

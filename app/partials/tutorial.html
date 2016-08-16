@@ -1,5 +1,5 @@
-<div id="game" class="content" ng-intro-options="tutorialOptions" ng-intro-method="startIntro">
-  <header>
+<div id="game" class="content" ng-intro-options="tutorialOptions" ng-intro-method="startIntro" ng-intro-autostart="true">
+  <header ng-click="startIntro()">
     <h1>Score: {{state.score}}</h1>
     <num-timer></num-timer>
   </header>

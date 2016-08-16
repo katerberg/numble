@@ -24,9 +24,17 @@
       };
     }
 
+    const introOptions = {
+      steps: [{
+        element: '#board',
+        intro: 'This is the board'
+      }]
+    };
+
     $scope.state = stateService.state;
     $scope.scoreStorage = storageService.getScore();
     $scope.state.board = boardService.getBoard(selectVal, tutorialService.grid);
     $scope.undo = stateService.undo;
+    $scope.tutorialOptions = introOptions;
   });
 })();
