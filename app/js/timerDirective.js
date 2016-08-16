@@ -6,7 +6,7 @@
       restrict: 'E',
       templateUrl: 'templates/timer.html',
       scope: {},
-      link: function($scope, element) {
+      link: function($scope) {
         var GAME_TIME = timeService.GAME_TIME;
 
         timeService.setAlert(function() {

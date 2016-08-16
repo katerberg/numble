@@ -14,7 +14,7 @@
         "value": 120,
         "allExcept": ["comments", "regex"]
     },
-    "validateIndentation": 4,
+    "validateIndentation": 2,
     "validateQuoteMarks": "'",
 
     "disallowMultipleLineStrings": true,
@@ -73,17 +73,5 @@
     "requireDotNotation": true,
     "requireSemicolons": true,
     "requireMultipleVarDecl": null,
-    "validateParameterSeparator": ", ",
-    "jsDoc": {
-        "checkAnnotations": "closurecompiler",
-        "checkParamNames": true,
-        "requireParamTypes": true,
-        "checkRedundantParams": true,
-        "checkReturnTypes": true,
-        "checkRedundantReturns": true,
-        "requireReturnTypes": true,
-        "checkTypes": true,
-        "checkRedundantAccess": true,
-        "requireNewlineAfterDescription": true
-    }
+    "validateParameterSeparator": ", "
 }

@@ -1,7 +1,8 @@
+(function() {
+'use strict';
 describe('ResultsCtrl', function() {
 
-  var instance,
-    $rootScope,
+  var $rootScope,
     $scope,
     $q,
     $location,
@@ -102,3 +103,4 @@ describe('ResultsCtrl', function() {
     });
   });
 });
+})();

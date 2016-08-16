@@ -1,3 +1,5 @@
+(function() {
+'use strict';
 describe('selectionService', function() {
 
   var instance,
@@ -43,3 +45,4 @@ describe('selectionService', function() {
     });
   });
 });
+})();

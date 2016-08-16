@@ -1,3 +1,5 @@
+(function() {
+'use strict';
 describe('winService', function() {
 
   var instance;
@@ -38,3 +40,4 @@ describe('winService', function() {
     });
   });
 });
+})();

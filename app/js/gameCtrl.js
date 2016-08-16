@@ -9,12 +9,6 @@
         timeService,
         selectionService) {
 
-    function selectVal(i, j) {
-      return function() {
-        select($scope.state.board[i][j]);
-      };
-    }
-
     function select(item) {
       var state = stateService.state;
       if (!selectionService.isValidMove(item, state.selected)) {
@@ -22,6 +16,12 @@
       }
       item.replace = false;
       selectionService.makeSelection(item);
+    }
+
+    function selectVal(i, j) {
+      return function() {
+        select($scope.state.board[i][j]);
+      };
     }
 
     $scope.state = stateService.state;

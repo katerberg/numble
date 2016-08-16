@@ -16,8 +16,6 @@
       for (var i = 0; i <= 4; i++) {
         num.push([]);
         for (var j = 0; j <= 4; j++) {
-          var myI = i;
-          var myJ = j;
           var nextNum = (layout || []).shift();
           var value = nextNum || getNewCellValue();
           if (value === 0) {

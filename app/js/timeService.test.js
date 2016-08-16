@@ -1,3 +1,6 @@
+(function() {
+'use strict';
+
 describe('timeService', function() {
 
   var instance,
@@ -15,7 +18,6 @@ describe('timeService', function() {
   });
 
   it('sets timer and alerts when finishes', function(done) {
-    var time = 30000;
     var alerted = false;
     instance.setAlert(function() {
       alerted = true;
@@ -49,3 +51,4 @@ describe('timeService', function() {
     expect(instance.getTime()).toEqual(13);
   });
 });
+})();

@@ -1,3 +1,5 @@
+(function() {
+'use strict';
 describe('boardService', function() {
 
   var instance;
@@ -66,4 +68,4 @@ describe('boardService', function() {
     });
   });
 });
-
+})();

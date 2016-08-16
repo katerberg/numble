@@ -3,7 +3,7 @@
 (function () {
   'use strict';
 
-  var numbleApp = angular.module('numbleApp', ['ngRoute', 'angular-gestures']);
+  angular.module('numbleApp', ['ngRoute', 'angular-gestures']);
 })();
 'use strict';
 
@@ -25,8 +25,6 @@
       for (var i = 0; i <= 4; i++) {
         num.push([]);
         for (var j = 0; j <= 4; j++) {
-          var myI = i;
-          var myJ = j;
           var nextNum = (layout || []).shift();
           var value = nextNum || getNewCellValue();
           if (value === 0) {
@@ -70,12 +68,6 @@
 
   angular.module('numbleApp').controller('GameCtrl', ["$scope", "$routeParams", "stateService", "storageService", "boardService", "timeService", "selectionService", function ($scope, $routeParams, stateService, storageService, boardService, timeService, selectionService) {
 
-    function selectVal(i, j) {
-      return function () {
-        select($scope.state.board[i][j]);
-      };
-    }
-
     function select(item) {
       var state = stateService.state;
       if (!selectionService.isValidMove(item, state.selected)) {
@@ -83,6 +75,12 @@
       }
       item.replace = false;
       selectionService.makeSelection(item);
+    }
+
+    function selectVal(i, j) {
+      return function () {
+        select($scope.state.board[i][j]);
+      };
     }
 
     $scope.state = stateService.state;
@@ -371,7 +369,7 @@
       restrict: 'E',
       templateUrl: 'templates/timer.html',
       scope: {},
-      link: function link($scope, element) {
+      link: function link($scope) {
         var GAME_TIME = timeService.GAME_TIME;
 
         timeService.setAlert(function () {
@@ -390,13 +388,7 @@
 (function () {
   'use strict';
 
-  angular.module('numbleApp').controller('TutorialCtrl', ["$scope", "stateService", "storageService", "boardService", "timeService", "selectionService", function ($scope, stateService, storageService, boardService, timeService, selectionService) {
-
-    function selectVal(i, j) {
-      return function () {
-        select($scope.state.board[i][j]);
-      };
-    }
+  angular.module('numbleApp').controller('TutorialCtrl', ["$scope", "stateService", "storageService", "boardService", "timeService", "tutorialService", "selectionService", function ($scope, stateService, storageService, boardService, timeService, tutorialService, selectionService) {
 
     function select(item) {
       var state = stateService.state;
@@ -407,11 +399,28 @@
       selectionService.makeSelection(item);
     }
 
+    function selectVal(i, j) {
+      return function () {
+        select($scope.state.board[i][j]);
+      };
+    }
+
     $scope.state = stateService.state;
     $scope.scoreStorage = storageService.getScore();
-    $scope.state.board = boardService.getBoard(selectVal, boardService.parseLayout());
+    $scope.state.board = boardService.getBoard(selectVal, tutorialService.grid);
     $scope.undo = stateService.undo;
   }]);
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('numbleApp').factory('tutorialService', function () {
+    return {
+      grid: [7, 4, 2, 8, 9, 1, 3, 5, 6, 1, 4, 1, 7, 2, 5, 5, 6, 8, 3, 2, 2, 5, 6, 4, 9]
+    };
+  });
 })();
 'use strict';
 

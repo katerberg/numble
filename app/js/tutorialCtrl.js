@@ -6,16 +6,11 @@
         storageService,
         boardService,
         timeService,
+        tutorialService,
         selectionService) {
 
-    function selectVal(i, j) {
-      return function() {
-        select($scope.state.board[i][j]);
-      };
-    }
-
     function select(item) {
-      var state = stateService.state;
+      const state = stateService.state;
       if (!selectionService.isValidMove(item, state.selected)) {
         return;
       }
@@ -23,9 +18,15 @@
       selectionService.makeSelection(item);
     }
 
+    function selectVal(i, j) {
+      return function() {
+        select($scope.state.board[i][j]);
+      };
+    }
+
     $scope.state = stateService.state;
     $scope.scoreStorage = storageService.getScore();
-    $scope.state.board = boardService.getBoard(selectVal, boardService.parseLayout());
+    $scope.state.board = boardService.getBoard(selectVal, tutorialService.grid);
     $scope.undo = stateService.undo;
   });
 })();
