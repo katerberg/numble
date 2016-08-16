@@ -1,4 +1,4 @@
-(function() {
+(() => {
   'use strict';
 
   angular.module('numbleApp').controller('TutorialCtrl', function($scope,
@@ -19,7 +19,7 @@
     }
 
     function selectVal(i, j) {
-      return function() {
+      return () => {
         select($scope.state.board[i][j]);
       };
     }
