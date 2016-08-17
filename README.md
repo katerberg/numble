@@ -23,3 +23,6 @@ karma start
 
 * Continuous Mode will auto-select first valid move. It should allow user to choose whether to use move or keep selecting longer string
 * Should be an indication of what formula was valid after selected
+* Clicking the last-selected item should undo
+* All scores should be logged, not just shared ones
+* There should be a high score page showing weekly/monthly/yearly high scores
