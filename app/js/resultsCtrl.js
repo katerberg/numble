@@ -6,6 +6,11 @@
       storageService,
       $location) {
 
+    $scope.storage = storageService.storeScore();
+    $scope.storage.then(function(res) {
+      $scope.shareId = res.name;
+    });
+
     function startOver() {
       stateService.resetGame();
       $location.url('/play');
@@ -17,10 +22,7 @@
     }
 
     function getShare() {
-      $scope.storage = storageService.storeScore();
-      $scope.storage.then(function(res) {
-        $scope.shareId = res.name;
-      });
+      $scope.shareVisible = true;
     }
     $scope.score = stateService.state.score;
     $scope.startOver = startOver;

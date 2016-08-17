@@ -2,8 +2,8 @@
   <h1>{{score}} point<span ng-if="score !== 1">s</span></h1>
   <button ng-click="startOver()">Play Again</button>
   <button ng-click="changeGameMode()">Change Game Mode</button>
-  <button ng-if="!storage" ng-click="getShare()">Challenge a Friend</button>
-  <button ng-if="storage && storage.$$state.status === 2" ng-click="getShare()">There was a problem. Try Again?</button>
-  <i ng-if="storage && storage.$$state.status === 0" class="challenge-loader fa fa-spinner fa-spin"></i>
-  <div ng-if="storage && storage.$$state.status === 1" num-select>http://katerberg.github.io/numble/dist/index.html#/play?goal={{shareId}}</div>
+  <button ng-if="!storageVisible" ng-click="getShare()">Challenge a Friend</button>
+  <button ng-if="storageVisible && storage.$$state.status === 2" ng-click="getShare()">There was a problem. Try Again?</button>
+  <i ng-if="storageVisible && storage.$$state.status === 0" class="challenge-loader fa fa-spinner fa-spin"></i>
+  <div ng-if="storageVisible && storage.$$state.status === 1" num-select>http://numblegame.com/dist/index.html#/play?goal={{shareId}}</div>
 </div>

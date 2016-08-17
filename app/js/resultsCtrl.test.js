@@ -22,10 +22,40 @@ describe('ResultsCtrl', function() {
     $scope = _$rootScope_.$new();
   }));
 
+  describe('during standup', function() {
+    it('stores score', () => {
+      const result = $q.defer().promise;
+      spyOn(storageService, 'storeScore').and.returnValue(result);
+
+      $controller('ResultsCtrl', {
+        $scope: $scope
+      });
+
+      expect($scope.storage).toBe(result);
+    });
+
+    it('exposes storage location after resolving', function() {
+      const deferred = $q.defer(),
+        expected = Math.random();
+      spyOn(storageService, 'storeScore').and.returnValue(deferred.promise);
+
+      $controller('ResultsCtrl', {
+        $scope: $scope
+      });
+      expect($scope.shareId).toBeUndefined();
+
+      deferred.resolve({name: expected});
+      $rootScope.$apply();
+
+      expect($scope.shareId).toBe(expected);
+    });
+  });
+
   describe('after standup', function() {
-    var ctrl;
+    let ctrl;
 
     beforeEach(function() {
+      spyOn(storageService, 'storeScore').and.returnValue($q.defer().promise);
       ctrl = $controller('ResultsCtrl', {
         $scope: $scope
       });
@@ -73,32 +103,13 @@ describe('ResultsCtrl', function() {
       });
     });
 
-    describe('#getShare()', function() {
-      beforeEach(function() {
-        spyOn(storageService, 'storeScore');
-      });
-
-      it('exposes storage promise', function() {
-        var expected = $q.defer().promise;
-        storageService.storeScore.and.returnValue(expected);
+    describe('#getShare()', () => {
+      it('should turn on visiblity', () => {
+        $scope.shareVisible = false;
 
         $scope.getShare();
 
-        expect($scope.storage).toBe(expected);
-      });
-
-      it('exposes storage location after resolving', function() {
-        var deferred = $q.defer(),
-          expected = Math.random();
-        storageService.storeScore.and.returnValue(deferred.promise);
-
-        $scope.getShare();
-        expect($scope.shareId).toBeUndefined();
-
-        deferred.resolve({name: expected});
-        $rootScope.$apply();
-
-        expect($scope.shareId).toBe(expected);
+        expect($scope.shareVisible).toBeTruthy();
       });
     });
   });
