@@ -1,8 +1,8 @@
-(function() {
+(() => {
 'use strict';
-describe('ResultsCtrl', function() {
+describe('ResultsCtrl', () => {
 
-  var $rootScope,
+  let $rootScope,
     $scope,
     $q,
     $location,
@@ -22,9 +22,10 @@ describe('ResultsCtrl', function() {
     $scope = _$rootScope_.$new();
   }));
 
-  describe('during standup', function() {
-    it('stores score', () => {
+  describe('during standup', () => {
+    it('stores score if it is not zero', () => {
       const result = $q.defer().promise;
+      stateService.state.score = 1;
       spyOn(storageService, 'storeScore').and.returnValue(result);
 
       $controller('ResultsCtrl', {
@@ -34,9 +35,21 @@ describe('ResultsCtrl', function() {
       expect($scope.storage).toBe(result);
     });
 
-    it('exposes storage location after resolving', function() {
+    it('does not store score if it is zero', () => {
+      stateService.state.score = 0;
+      spyOn(storageService, 'storeScore');
+
+      $controller('ResultsCtrl', {
+        $scope: $scope
+      });
+
+      expect(storageService.storeScore).not.toHaveBeenCalled();
+    });
+
+    it('exposes storage location after resolving', () => {
       const deferred = $q.defer(),
         expected = Math.random();
+      stateService.state.score = Math.random();
       spyOn(storageService, 'storeScore').and.returnValue(deferred.promise);
 
       $controller('ResultsCtrl', {
@@ -51,52 +64,53 @@ describe('ResultsCtrl', function() {
     });
   });
 
-  describe('after standup', function() {
+  describe('after standup', () => {
     let ctrl;
 
-    beforeEach(function() {
+    beforeEach(() => {
+      stateService.state.score = Math.random();
       spyOn(storageService, 'storeScore').and.returnValue($q.defer().promise);
       ctrl = $controller('ResultsCtrl', {
         $scope: $scope
       });
     });
 
-    it('instantiates', function() {
+    it('instantiates', () => {
       expect($scope).toBeDefined();
     });
 
-    describe('#changeGameMode()', function() {
-      beforeEach(function() {
+    describe('#changeGameMode()', () => {
+      beforeEach(() => {
         spyOn(stateService, 'resetGame');
         spyOn($location, 'url');
       });
 
-      it('goes back to game page', function() {
+      it('goes back to game page', () => {
         $scope.changeGameMode();
 
         expect($location.url).toHaveBeenCalledWith('/');
       });
 
-      it('resets state', function() {
+      it('resets state', () => {
         $scope.changeGameMode();
 
         expect(stateService.resetGame).toHaveBeenCalled();
       });
     });
 
-    describe('#startOver()', function() {
-      beforeEach(function() {
+    describe('#startOver()', () => {
+      beforeEach(() => {
         spyOn(stateService, 'resetGame');
         spyOn($location, 'url');
       });
 
-      it('goes back to game page', function() {
+      it('goes back to game page', () => {
         $scope.startOver();
 
         expect($location.url).toHaveBeenCalledWith('/play');
       });
 
-      it('resets state', function() {
+      it('resets state', () => {
         $scope.startOver();
 
         expect(stateService.resetGame).toHaveBeenCalled();
@@ -104,6 +118,22 @@ describe('ResultsCtrl', function() {
     });
 
     describe('#getShare()', () => {
+      it('should store score if it was not stored yet', () => {
+        const deferred = $q.defer(),
+          expected = Math.random();
+        $scope.storage = null;
+        storageService.storeScore.and.returnValue(deferred.promise);
+
+        $scope.getShare();
+
+        expect($scope.shareId).toBeUndefined();
+        deferred.resolve({name: expected});
+        $rootScope.$apply();
+
+        expect($scope.shareId).toBe(expected);
+        expect($scope.storage).toBe(deferred.promise);
+      });
+
       it('should turn on visiblity', () => {
         $scope.shareVisible = false;
 
