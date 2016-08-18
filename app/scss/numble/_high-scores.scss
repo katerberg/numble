@@ -6,7 +6,19 @@
   }
 
   h2 {
+    display: inline-block;
     color: $high-scores-header-fg;
+    font-size: 1.6em;
+    width: 50%;
+    text-align: center;
+    font-weight: 200;
+    &:hover {
+      cursor: pointer;
+    }
+    &.active {
+      border-bottom: 1px solid $high-scores-header-fg;
+      font-weight: 700;
+    }
   }
 
   ul,li {

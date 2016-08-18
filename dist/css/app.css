@@ -164,7 +164,17 @@ h1 {
   #high-scores h1 {
     color: #71510b; }
   #high-scores h2 {
-    color: #71510b; }
+    display: inline-block;
+    color: #71510b;
+    font-size: 1.6em;
+    width: 50%;
+    text-align: center;
+    font-weight: 200; }
+    #high-scores h2:hover {
+      cursor: pointer; }
+    #high-scores h2.active {
+      border-bottom: 1px solid #71510b;
+      font-weight: 700; }
   #high-scores ul, #high-scores li {
     margin: 0;
     padding: 0;

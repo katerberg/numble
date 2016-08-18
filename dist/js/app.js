@@ -109,6 +109,10 @@
   'use strict';
 
   angular.module('numbleApp').controller('HighScoreCtrl', ["$scope", "storageService", function ($scope, storageService) {
+    $scope.mode = 'weekly';
+    $scope.setMode = function (mode) {
+      return $scope.mode = mode;
+    };
     $scope.scoresRequest = storageService.getWeeklyHighScores();
     $scope.scoresRequest.then(function (res) {
       return $scope.scores = res;
