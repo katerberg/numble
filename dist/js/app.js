@@ -108,6 +108,18 @@
 (function () {
   'use strict';
 
+  angular.module('numbleApp').controller('HighScoreCtrl', ["$scope", "storageService", function ($scope, storageService) {
+    $scope.scoresRequest = storageService.getWeeklyHighScores();
+    $scope.scoresRequest.then(function (res) {
+      return $scope.scores = res;
+    });
+  }]);
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
   angular.module('numbleApp').controller('ResultsCtrl', ["$scope", "stateService", "storageService", "$location", function ($scope, stateService, storageService, $location) {
 
     function storeScore() {
@@ -155,6 +167,9 @@
     }).when('/tutorial', {
       templateUrl: 'partials/tutorial.html',
       controller: 'TutorialCtrl'
+    }).when('/high-scores', {
+      templateUrl: 'partials/high-scores.html',
+      controller: 'HighScoreCtrl'
     }).when('/play', {
       templateUrl: 'partials/game.html',
       controller: 'GameCtrl'
@@ -291,7 +306,9 @@
   'use strict';
 
   angular.module('numbleApp').factory('storageService', ["$http", "$q", "stateService", function ($http, $q, stateService) {
-    var GAMES_URL = 'https://project-8921628173750252600.firebaseio.com/games';
+    var PROJECT_URL = 'https://project-8921628173750252600.firebaseio.com',
+        GAMES_URL = PROJECT_URL + '/games',
+        WEEKLY_SCORES_URL = PROJECT_URL + '/high-scores/weekly';
 
     function storeScore() {
       var displayVals = stateService.state.board.reduce(function (prevArr, arr) {
@@ -310,6 +327,16 @@
       });
     }
 
+    function getWeeklyHighScores() {
+      return $http.get(WEEKLY_SCORES_URL + '.json').then(function (res) {
+        return Object.keys(res.data).map(function (key) {
+          return res.data[key];
+        }).sort(function (a, b) {
+          return a.score - b.score;
+        });
+      });
+    }
+
     function getScore(key) {
       if (key) {
         return $http.get(GAMES_URL + '/' + key + '.json').then(function (res) {
@@ -322,6 +349,7 @@
 
     return {
       getScore: getScore,
+      getWeeklyHighScores: getWeeklyHighScores,
       storeScore: storeScore
     };
   }]);

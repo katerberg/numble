@@ -10,6 +10,10 @@
       templateUrl: 'partials/tutorial.html',
       controller: 'TutorialCtrl'
     }).
+    when('/high-scores', {
+      templateUrl: 'partials/high-scores.html',
+      controller: 'HighScoreCtrl'
+    }).
     when('/play', {
       templateUrl: 'partials/game.html',
       controller: 'GameCtrl'
