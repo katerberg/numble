@@ -1,0 +1,30 @@
+#high-scores {
+  background-color: $high-scores-background-color;
+  
+  h1 {
+    color: $high-scores-header-fg;
+  }
+
+  h2 {
+    color: $high-scores-header-fg;
+  }
+
+  ul,li {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    font-size: 1.2em;
+  }
+
+  button {
+    border: 1px solid $high-scores-button-border;
+    background-color: darken($high-scores-button-bg, 10%);
+    color: $high-scores-button-fg;
+    &:hover {
+      border: 1px solid $high-scores-button-border-hover;
+      background-color: $high-scores-button-bg-hover;
+      color: $high-scores-button-fg-hover;
+      cursor: pointer;
+    }
+  }
+}

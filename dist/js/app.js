@@ -332,7 +332,7 @@
         return Object.keys(res.data).map(function (key) {
           return res.data[key];
         }).sort(function (a, b) {
-          return a.score - b.score;
+          return b.score - a.score;
         });
       });
     }

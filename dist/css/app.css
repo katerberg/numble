@@ -159,5 +159,26 @@ h1 {
   #results .challenge-loader {
     font-size: 3em; }
 
+#high-scores {
+  background-color: #FFCE64; }
+  #high-scores h1 {
+    color: #71510b; }
+  #high-scores h2 {
+    color: #71510b; }
+  #high-scores ul, #high-scores li {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    font-size: 1.2em; }
+  #high-scores button {
+    border: 1px solid #fff;
+    background-color: #433006;
+    color: #fff; }
+    #high-scores button:hover {
+      border: 1px solid #FFC64B;
+      background-color: #fff;
+      color: #71510b;
+      cursor: pointer; }
+
 .introjs-tooltip .introjs-prevbutton, .introjs-tooltip .introjs-skipbutton {
   display: none; }

@@ -28,15 +28,20 @@ describe('storageService', () => {
       input1 = {
         score: 53
       },
+      input2 = {
+        score: 101
+      },
       data = {
         'foo': input0,
-        'bar': input1
+        'bar': input1,
+        'toor': input2
       },
       deferred = $q.defer();
       spyOn($http, 'get').and.returnValue(deferred.promise);
       instance.getWeeklyHighScores().then(val => {
-        expect(val[0]).toBe(input1);
+        expect(val[0]).toBe(input2);
         expect(val[1]).toBe(input0);
+        expect(val[2]).toBe(input1);
         done();
       });
 
