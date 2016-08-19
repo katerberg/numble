@@ -93,6 +93,12 @@
     $scope.undo = stateService.undo;
   }]);
 })();
+"use strict";
+
+Date.prototype.getWeek = function () {
+  var onejan = new Date(undefined.getFullYear(), 0, 1);
+  return Math.ceil(((undefined - onejan) / 86400000 + onejan.getDay() + 1) / 7);
+};
 'use strict';
 
 (function () {
@@ -117,6 +123,29 @@
     $scope.scoresRequest.then(function (res) {
       return $scope.scores = res;
     });
+  }]);
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('numbleApp').directive('navButton', ["$location", function ($location) {
+    return {
+      restrict: 'E',
+      replace: true,
+      templateUrl: 'js/navButton.html',
+      transclude: true,
+      scope: {
+        navButtonUrl: '@'
+      },
+      link: function link(scope) {
+        scope.follow = function () {
+          console.log('here');
+          $location.url('/' + scope.navButtonUrl);
+        };
+      }
+    };
   }]);
 })();
 'use strict';
