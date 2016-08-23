@@ -141,7 +141,6 @@ Date.prototype.getWeek = function () {
       },
       link: function link(scope) {
         scope.follow = function () {
-          console.log('here');
           $location.url('/' + scope.navButtonUrl);
         };
       }

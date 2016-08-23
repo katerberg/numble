@@ -12,7 +12,6 @@
       },
       link: scope => {
         scope.follow = () => {
-          console.log('here');
           $location.url('/' + scope.navButtonUrl);
         };
       }
