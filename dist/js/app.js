@@ -93,12 +93,18 @@
     $scope.undo = stateService.undo;
   }]);
 })();
-"use strict";
+'use strict';
 
-Date.prototype.getWeek = function () {
-  var onejan = new Date(undefined.getFullYear(), 0, 1);
-  return Math.ceil(((undefined - onejan) / 86400000 + onejan.getDay() + 1) / 7);
-};
+(function () {
+  'use strict';
+  /* jshint ignore:start */
+
+  Date.prototype.getWeek = function () {
+    var onejan = new Date(undefined.getFullYear(), 0, 1);
+    return Math.ceil(((undefined - onejan) / 86400000 + onejan.getDay() + 1) / 7);
+  };
+  /* jshint ignore:end */
+})();
 'use strict';
 
 (function () {
