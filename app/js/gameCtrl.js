@@ -27,7 +27,7 @@
     $scope.state = stateService.state;
     $scope.scoreStorage = storageService.getScore($routeParams.goal);
     $scope.scoreStorage.then(function(res) {
-      $scope.state.board = boardService.getBoard(selectVal, boardService.parseLayout(res ? res.layout : null));
+      $scope.state.board = boardService.getBoard(selectVal, boardService.parseLayout(res ? res.values : null));
       $scope.goal = res ? res.score : null;
       timeService.startTimer(timeService.GAME_TIME);
     });
