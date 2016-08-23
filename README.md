@@ -24,7 +24,7 @@ karma start
 * Should be an indication of what formula was valid after selected
 * Clicking the last-selected item should undo
 * There should be a high score page showing weekly/monthly/yearly high scores
-* It would be nice to have more than 2 inputs e.g. 3*3*3=27
+* It would be nice to have more than 2 inputs e.g. 3\*3\*3=27
 * Some kind of challenge mode for single player mode (levels allowing multiplication) (e.g. levels allowing multiplication)
 
 #Known bugs
