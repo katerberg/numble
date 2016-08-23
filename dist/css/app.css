@@ -164,27 +164,44 @@ h1 {
   #high-scores h1 {
     color: #71510b; }
   #high-scores h2 {
-    display: inline-block;
     color: #71510b;
     font-size: 1.6em;
-    width: 50%;
-    text-align: center;
     font-weight: 200; }
-    #high-scores h2:hover {
-      cursor: pointer; }
-    #high-scores h2.active {
-      border-bottom: 1px solid #71510b;
-      font-weight: 700; }
+    #high-scores h2.selector {
+      display: inline-block;
+      width: 50%;
+      text-align: center; }
+      #high-scores h2.selector:hover {
+        cursor: pointer; }
+      #high-scores h2.selector.active {
+        border-bottom: 1px solid #71510b;
+        font-weight: 700; }
   #high-scores ul, #high-scores li {
     margin: 0;
     padding: 0;
     list-style-type: none;
     font-size: 1.2em; }
+  #high-scores input {
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    display: block;
+    padding: 6px 12px;
+    font-size: 1.5em;
+    width: calc(100% - 26px); }
+    #high-scores input.ng-invalid:not(.ng-pristine) {
+      border: 1px solid red; }
   #high-scores button {
+    margin-top: 16px;
     border: 1px solid #fff;
     background-color: #433006;
     color: #fff; }
-    #high-scores button:hover {
+    #high-scores button:disabled {
+      opacity: 0.65;
+      cursor: not-allowed; }
+    #high-scores button:hover:not([disabled]) {
       border: 1px solid #FFC64B;
       background-color: #fff;
       color: #71510b;

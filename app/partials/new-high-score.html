@@ -1,0 +1,6 @@
+<div id="high-scores" class="content">
+  <h1>New High Score!</h1>
+  <h2>You scored {{score}} points!</h2>
+  <input ng-model="callsign" type="text" placeholder="Enter your callsign" required pattern=".{1,12}" maxlength="12"/>
+  <button ng-disabled="!callsign" ng-click="submit()">Submit</button>
+</div>

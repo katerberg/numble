@@ -20,7 +20,7 @@ describe('storageService', () => {
     expect(instance).toBeDefined();
   });
 
-  describe('#getWeeklyHighScores()', () => {
+  describe('#getMonthlyHighScores()', () => {
     it('gets and sorts high scores', done =>  {
       const input0 = {
         score: 87
@@ -38,7 +38,7 @@ describe('storageService', () => {
       },
       deferred = $q.defer();
       spyOn($http, 'get').and.returnValue(deferred.promise);
-      instance.getWeeklyHighScores().then(val => {
+      instance.getMonthlyHighScores().then(val => {
         expect(val[0]).toBe(input2);
         expect(val[1]).toBe(input0);
         expect(val[2]).toBe(input1);
@@ -46,7 +46,7 @@ describe('storageService', () => {
       });
 
       expect($http.get)
-        .toHaveBeenCalledWith('https://project-8921628173750252600.firebaseio.com/high-scores/weekly.json');
+        .toHaveBeenCalledWith('https://project-8921628173750252600.firebaseio.com/high-scores/monthly.json');
       deferred.resolve({data: data});
       $rootScope.$apply();
     });
@@ -68,14 +68,14 @@ describe('storageService', () => {
         },
         deferred = $q.defer();
       spyOn($http, 'get').and.returnValue(deferred.promise);
-      instance.getWeeklyHighScores().then(val => {
+      instance.getMonthlyHighScores().then(val => {
         expect(val.length).toEqual(5);
         expect(val[4]).toBe(input4);
         done();
       });
 
       expect($http.get)
-        .toHaveBeenCalledWith('https://project-8921628173750252600.firebaseio.com/high-scores/weekly.json');
+        .toHaveBeenCalledWith('https://project-8921628173750252600.firebaseio.com/high-scores/monthly.json');
       deferred.resolve({data: data});
       $rootScope.$apply();
     });

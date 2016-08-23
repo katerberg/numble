@@ -66,7 +66,7 @@
 (function () {
   'use strict';
 
-  angular.module('numbleApp').controller('GameCtrl', ["$scope", "$routeParams", "stateService", "storageService", "boardService", "timeService", "selectionService", function ($scope, $routeParams, stateService, storageService, boardService, timeService, selectionService) {
+  angular.module('numbleApp').controller('GameCtrl', ["$scope", "$routeParams", "$location", "stateService", "storageService", "boardService", "timeService", "selectionService", function ($scope, $routeParams, $location, stateService, storageService, boardService, timeService, selectionService) {
 
     function select(item) {
       var state = stateService.state;
@@ -83,6 +83,17 @@
       };
     }
 
+    timeService.setAlert(function () {
+      if (stateService.state.score > $scope.mustBeat.score) {
+        $location.url('/new-high-score');
+      } else {
+        $location.url('/results');
+      }
+    });
+    storageService.getMonthlyHighScores().then(function (scores) {
+      $scope.mustBeat = scores[scores.length - 1];
+    });
+
     $scope.state = stateService.state;
     $scope.scoreStorage = storageService.getScore($routeParams.goal);
     $scope.scoreStorage.then(function (res) {
@@ -90,6 +101,7 @@
       $scope.goal = res ? res.score : null;
       timeService.startTimer(timeService.GAME_TIME);
     });
+    $scope.scoreStorage = storageService.getScore($routeParams.goal);
     $scope.undo = stateService.undo;
   }]);
 })();
@@ -158,6 +170,19 @@
 (function () {
   'use strict';
 
+  angular.module('numbleApp').controller('NewHighScoreCtrl', ["$scope", "$location", "stateService", "storageService", function ($scope, $location, stateService, storageService) {
+
+    $scope.score = stateService.state.score;
+    $scope.submit = function () {
+      $location.url('/high-scores');
+    };
+  }]);
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
   angular.module('numbleApp').controller('ResultsCtrl', ["$scope", "stateService", "storageService", "$location", function ($scope, stateService, storageService, $location) {
 
     function storeScore() {
@@ -205,6 +230,9 @@
     }).when('/tutorial', {
       templateUrl: 'partials/tutorial.html',
       controller: 'TutorialCtrl'
+    }).when('/new-high-score', {
+      templateUrl: 'partials/new-high-score.html',
+      controller: 'NewHighScoreCtrl'
     }).when('/high-scores', {
       templateUrl: 'partials/high-scores.html',
       controller: 'HighScoreCtrl'
@@ -346,7 +374,7 @@
   angular.module('numbleApp').factory('storageService', ["$http", "$q", "stateService", function ($http, $q, stateService) {
     var PROJECT_URL = 'https://project-8921628173750252600.firebaseio.com',
         GAMES_URL = PROJECT_URL + '/games',
-        WEEKLY_SCORES_URL = PROJECT_URL + '/high-scores/weekly';
+        MONTHLY_SCORES_URL = PROJECT_URL + '/high-scores/monthly';
 
     function storeScore() {
       var displayVals = stateService.state.board.reduce(function (prevArr, arr) {
@@ -365,8 +393,8 @@
       });
     }
 
-    function getWeeklyHighScores() {
-      return $http.get(WEEKLY_SCORES_URL + '.json').then(function (res) {
+    function getMonthlyHighScores() {
+      return $http.get(MONTHLY_SCORES_URL + '.json').then(function (res) {
         return Object.keys(res.data).map(function (key) {
           return res.data[key];
         }).sort(function (a, b) {
@@ -387,7 +415,7 @@
 
     return {
       getScore: getScore,
-      getWeeklyHighScores: getWeeklyHighScores,
+      getMonthlyHighScores: getMonthlyHighScores,
       storeScore: storeScore
     };
   }]);
@@ -449,17 +477,13 @@
 (function () {
   'use strict';
 
-  angular.module('numbleApp').directive('numTimer', ["timeService", "$location", function (timeService, $location) {
+  angular.module('numbleApp').directive('numTimer', ["timeService", function (timeService) {
     return {
       restrict: 'E',
       templateUrl: 'templates/timer.html',
       scope: {},
       link: function link($scope) {
         var GAME_TIME = timeService.GAME_TIME;
-
-        timeService.setAlert(function () {
-          $location.url('/results');
-        });
 
         $scope.timePercentage = function () {
           return 100 * (timeService.getTime() - 1) / GAME_TIME;

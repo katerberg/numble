@@ -1,19 +1,15 @@
 (function() {
   'use strict';
 
-  angular.module('numbleApp').directive('numTimer', function(timeService, $location) {
+  angular.module('numbleApp').directive('numTimer', function(timeService) {
     return {
       restrict: 'E',
       templateUrl: 'templates/timer.html',
       scope: {},
       link: function($scope) {
-        var GAME_TIME = timeService.GAME_TIME;
+        const GAME_TIME = timeService.GAME_TIME;
 
-        timeService.setAlert(function() {
-          $location.url('/results');
-        });
-
-        $scope.timePercentage = function() {
+        $scope.timePercentage = () => {
           return 100 * (timeService.getTime() - 1) / GAME_TIME;
         };
       }

@@ -4,7 +4,7 @@
   angular.module('numbleApp').factory('storageService', function($http, $q, stateService) {
     const PROJECT_URL = 'https://project-8921628173750252600.firebaseio.com',
       GAMES_URL = `${PROJECT_URL}/games`,
-      WEEKLY_SCORES_URL = `${PROJECT_URL}/high-scores/weekly`;
+      MONTHLY_SCORES_URL = `${PROJECT_URL}/high-scores/monthly`;
 
     function storeScore() {
       var displayVals = stateService.state.board.reduce(function(prevArr, arr) {
@@ -21,8 +21,8 @@
       return $http.post(GAMES_URL + '.json', storage).then(res => res.data);
     }
 
-    function getWeeklyHighScores() {
-      return $http.get(WEEKLY_SCORES_URL + '.json')
+    function getMonthlyHighScores() {
+      return $http.get(MONTHLY_SCORES_URL + '.json')
         .then(res => 
           Object.keys(res.data)
           .map(key => res.data[key])
@@ -41,7 +41,7 @@
 
     return {
       getScore: getScore,
-      getWeeklyHighScores: getWeeklyHighScores,
+      getMonthlyHighScores: getMonthlyHighScores,
       storeScore: storeScore
     };
   });

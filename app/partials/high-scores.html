@@ -1,7 +1,7 @@
 <div id="high-scores" class="content">
   <h1>High Scores</h1>
-  <h2 ng-click="setMode('weekly')" ng-class="{'active': mode === 'weekly'}">Weekly</h2>
-  <h2 ng-click="setMode('lifetime')" ng-class="{'active': mode === 'lifetime'}">Lifetime</h2>
+  <h2 class="selector" ng-click="setMode('weekly')" ng-class="{'active': mode === 'weekly'}">Weekly</h2>
+  <h2 class="selector" ng-click="setMode('lifetime')" ng-class="{'active': mode === 'lifetime'}">Lifetime</h2>
   <ul ng-if="mode === 'weekly'">
     <li ng-repeat="score in scores | limitTo:5">
       {{score.mode || 'Jeremy'}} - {{score.score}}
