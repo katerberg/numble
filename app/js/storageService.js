@@ -23,7 +23,11 @@
 
     function getWeeklyHighScores() {
       return $http.get(WEEKLY_SCORES_URL + '.json')
-        .then(res => Object.keys(res.data).map(key => res.data[key]).sort((a, b) => b.score - a.score)
+        .then(res => 
+          Object.keys(res.data)
+          .map(key => res.data[key])
+          .sort((a, b) => b.score - a.score)
+          .slice(0,5)
         );
     }
 

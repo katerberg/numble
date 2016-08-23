@@ -366,7 +366,7 @@ Date.prototype.getWeek = function () {
           return res.data[key];
         }).sort(function (a, b) {
           return b.score - a.score;
-        });
+        }).slice(0, 5);
       });
     }
 

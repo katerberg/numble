@@ -50,6 +50,35 @@ describe('storageService', () => {
       deferred.resolve({data: data});
       $rootScope.$apply();
     });
+
+    it('limits scores to first 5', done =>  {
+      const input0 = {score: 87},
+        input1 = {score: 86},
+        input2 = {score: 85},
+        input3 = {score: 84},
+        input4 = {score: 83},
+        input5 = {score: 82},
+        data = {
+          'foo': input0,
+          'bar': input1,
+          'toor': input2,
+          'root': input3,
+          'oot': input4,
+          'too': input5
+        },
+        deferred = $q.defer();
+      spyOn($http, 'get').and.returnValue(deferred.promise);
+      instance.getWeeklyHighScores().then(val => {
+        expect(val.length).toEqual(5);
+        expect(val[4]).toBe(input4);
+        done();
+      });
+
+      expect($http.get)
+        .toHaveBeenCalledWith('https://project-8921628173750252600.firebaseio.com/high-scores/weekly.json');
+      deferred.resolve({data: data});
+      $rootScope.$apply();
+    });
   });
 });
 })();
