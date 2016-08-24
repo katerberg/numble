@@ -33,7 +33,11 @@
       }
     });
     storageService.getMonthlyHighScores().then(scores => {
-      $scope.mustBeat = scores[scores.length -1];
+      if (scores.length < 5) {
+        $scope.mustBeat = {score: 0};
+      } else {
+        $scope.mustBeat = scores[scores.length -1];
+      }
     });
 
     $scope.state = stateService.state;

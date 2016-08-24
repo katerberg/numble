@@ -91,7 +91,11 @@
       }
     });
     storageService.getMonthlyHighScores().then(function (scores) {
-      $scope.mustBeat = scores[scores.length - 1];
+      if (scores.length < 5) {
+        $scope.mustBeat = { score: 0 };
+      } else {
+        $scope.mustBeat = scores[scores.length - 1];
+      }
     });
 
     $scope.state = stateService.state;
@@ -133,13 +137,17 @@
   'use strict';
 
   angular.module('numbleApp').controller('HighScoreCtrl', ["$scope", "storageService", function ($scope, storageService) {
-    $scope.mode = 'weekly';
+    $scope.mode = 'monthly';
     $scope.setMode = function (mode) {
       return $scope.mode = mode;
     };
-    $scope.scoresRequest = storageService.getWeeklyHighScores();
-    $scope.scoresRequest.then(function (res) {
-      return $scope.scores = res;
+    $scope.monthlyRequest = storageService.getMonthlyHighScores();
+    $scope.monthlyRequest.then(function (res) {
+      return $scope.monthlyScores = res;
+    });
+    $scope.lifetimeRequest = storageService.getLifetimeHighScores();
+    $scope.lifetimeRequest.then(function (res) {
+      return $scope.lifetimeScores = res;
     });
   }]);
 })();
@@ -173,8 +181,10 @@
   angular.module('numbleApp').controller('NewHighScoreCtrl', ["$scope", "$location", "stateService", "storageService", function ($scope, $location, stateService, storageService) {
 
     $scope.score = stateService.state.score;
-    $scope.submit = function () {
-      $location.url('/high-scores');
+    $scope.submit = function (callsign) {
+      storageService.submitHighScore(callsign).then(function () {
+        return $location.url('/high-scores');
+      });
     };
   }]);
 })();
@@ -374,33 +384,54 @@
   angular.module('numbleApp').factory('storageService', ["$http", "$q", "stateService", function ($http, $q, stateService) {
     var PROJECT_URL = 'https://project-8921628173750252600.firebaseio.com',
         GAMES_URL = PROJECT_URL + '/games',
-        MONTHLY_SCORES_URL = PROJECT_URL + '/high-scores/monthly';
+        MONTHLY_SCORES_URL = PROJECT_URL + '/high-scores/monthly/' + new Date().getFullYear() + '-' + new Date().getMonth(),
+        LIFETIME_SCORES_URL = PROJECT_URL + '/high-scores/lifetime';
 
-    function storeScore() {
+    function buildStorage(callsign) {
       var displayVals = stateService.state.board.reduce(function (prevArr, arr) {
         return prevArr + arr.reduce(function (prevItem, item) {
           return prevItem + item.display + ',';
         }, '');
       }, '');
-      var storage = {
+      return {
+        callsign: callsign,
         score: stateService.state.score,
         values: displayVals.substring(0, displayVals.length - 1),
         date: new Date() + '',
         mode: stateService.state.mode
       };
-      return $http.post(GAMES_URL + '.json', storage).then(function (res) {
+    }
+
+    function storeScore() {
+      return $http.post(GAMES_URL + '.json', buildStorage()).then(function (res) {
         return res.data;
       });
     }
 
+    function getTopFiveScores(res) {
+      if (!res.data) {
+        return [];
+      }
+      return Object.keys(res.data).map(function (key) {
+        return res.data[key];
+      }).sort(function (a, b) {
+        return b.score - a.score;
+      }).slice(0, 5);
+    }
+
     function getMonthlyHighScores() {
-      return $http.get(MONTHLY_SCORES_URL + '.json').then(function (res) {
-        return Object.keys(res.data).map(function (key) {
-          return res.data[key];
-        }).sort(function (a, b) {
-          return b.score - a.score;
-        }).slice(0, 5);
-      });
+      return $http.get(MONTHLY_SCORES_URL + '.json').then(getTopFiveScores);
+    }
+
+    function getLifetimeHighScores() {
+      return $http.get(LIFETIME_SCORES_URL + '.json').then(getTopFiveScores);
+    }
+
+    function submitHighScore(callsign) {
+      var lifetime = $http.post(LIFETIME_SCORES_URL + '.json', buildStorage(callsign));
+      var monthly = $http.post(MONTHLY_SCORES_URL + '.json', buildStorage(callsign));
+
+      return $q.all([lifetime, monthly]);
     }
 
     function getScore(key) {
@@ -416,6 +447,8 @@
     return {
       getScore: getScore,
       getMonthlyHighScores: getMonthlyHighScores,
+      getLifetimeHighScores: getLifetimeHighScores,
+      submitHighScore: submitHighScore,
       storeScore: storeScore
     };
   }]);

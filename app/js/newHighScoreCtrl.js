@@ -7,9 +7,8 @@ angular.module('numbleApp').controller('NewHighScoreCtrl', function($scope,
     storageService) {
 
   $scope.score = stateService.state.score;
-  $scope.submit = () => {
-    $location.url('/high-scores');
+  $scope.submit = callsign => {
+    storageService.submitHighScore(callsign).then(() => $location.url('/high-scores'));
   };
-
 });
 })();
