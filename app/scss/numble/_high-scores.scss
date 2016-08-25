@@ -24,6 +24,10 @@
   }
 
   ul,li {
+    color: $high-scores-header-fg;
+    font-weight: 100;
+    line-height: 1.6em;
+    text-align: left;
     margin: 0;
     padding: 0;
     list-style-type: none;
@@ -50,6 +54,16 @@
     border: 1px solid $high-scores-button-border;
     background-color: darken($high-scores-button-bg, 10%);
     color: $high-scores-button-fg;
+    &.challenge {
+      padding: 8px;
+      margin-top: 0;
+      font-size: 0.6em;
+      display: inline-block;
+      width: auto;
+      vertical-align: middle;
+      border-radius: 4px;
+      float: right;
+    }
     &:disabled {
       opacity: 0.65;
       cursor: not-allowed;
@@ -59,6 +73,18 @@
       background-color: $high-scores-button-bg-hover;
       color: $high-scores-button-fg-hover;
       cursor: pointer;
+    }
+  }
+}
+@media screen and (min-width: $breakpoint-min-width) {
+  #high-scores {
+    ul,li {
+      text-align: center;
+      font-size: 1.5em;
+    }
+    button.challenge {
+      margin-left: 20px;
+      float: none;
     }
   }
 }

@@ -6,7 +6,8 @@
   <i ng-if="mode === 'lifetime' && lifetimeRequest && lifetimeRequest.$$state.status !== 1" class="fa fa-spin fa-spinner fa-5x"></i>
   <ul ng-if="mode === 'monthly'">
     <li ng-repeat="score in monthlyScores | limitTo:5">
-      {{score.callsign || 'Secret Snake'}} - {{score.score}}
+      <span>{{score.callsign || 'Secret Snake'}} - {{score.score}}</span>
+      <button class="challenge" ng-click="challenge(score)">Challenge</button>
     </li>
     <li ng-if="monthlyScores.length === 0">
       None yet!

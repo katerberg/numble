@@ -177,6 +177,10 @@ h1 {
         border-bottom: 1px solid #71510b;
         font-weight: 700; }
   #high-scores ul, #high-scores li {
+    color: #71510b;
+    font-weight: 100;
+    line-height: 1.6em;
+    text-align: left;
     margin: 0;
     padding: 0;
     list-style-type: none;
@@ -198,6 +202,15 @@ h1 {
     border: 1px solid #fff;
     background-color: #433006;
     color: #fff; }
+    #high-scores button.challenge {
+      padding: 8px;
+      margin-top: 0;
+      font-size: 0.6em;
+      display: inline-block;
+      width: auto;
+      vertical-align: middle;
+      border-radius: 4px;
+      float: right; }
     #high-scores button:disabled {
       opacity: 0.65;
       cursor: not-allowed; }
@@ -206,6 +219,14 @@ h1 {
       background-color: #fff;
       color: #71510b;
       cursor: pointer; }
+
+@media screen and (min-width: 350px) {
+  #high-scores ul, #high-scores li {
+    text-align: center;
+    font-size: 1.5em; }
+  #high-scores button.challenge {
+    margin-left: 20px;
+    float: none; } }
 
 .introjs-tooltip .introjs-prevbutton, .introjs-tooltip .introjs-skipbutton {
   display: none; }
