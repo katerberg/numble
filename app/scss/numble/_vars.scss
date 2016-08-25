@@ -1,4 +1,5 @@
 $breakpoint-min-width: 350px;
+$toggle-height: 28px;
 
 //Colors
 $black: #000;
@@ -20,11 +21,17 @@ $aqua-wellest: #0F3C37;
 $rose-quartz: #F7CAC9;
 $peach-echo: #f7786b;
 $chestnut: #402619;
+$mustard-rarest: #FFCE64;
+$mustard-rare: #FFC64B;
+$mustard-medium: #ECB02E;
+$mustard-well: #9F7210;
+$mustard-wellest: #71510b;
 
 //Color Usages
 $start-background-color: $aqua-rarest;
 $game-background-color: $purple-rarest;
 $results-background-color: $rose-quartz;
+$high-scores-background-color: $mustard-rarest;
 $title-color: $purple-wellest;
 $start-button-border: $white;
 $start-button-bg: $aqua-wellest;
@@ -55,3 +62,10 @@ $results-button-bg: $peach-echo;
 $results-button-fg: $chestnut;
 $results-button-bg-hover: $chestnut;
 $results-button-fg-hover: $peach-echo;
+$high-scores-header-fg: $mustard-wellest;
+$high-scores-button-border: $white;
+$high-scores-button-bg: $mustard-wellest;
+$high-scores-button-fg: $white;
+$high-scores-button-border-hover: $mustard-rare;
+$high-scores-button-bg-hover: $white;
+$high-scores-button-fg-hover: $mustard-wellest;

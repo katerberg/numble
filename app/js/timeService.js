@@ -16,14 +16,14 @@
       }
     }
 
-    function startTimer(timeInSeconds) {
-      timeRemaining = timeInSeconds;
-      $timeout(tickFn, 1000);
-    }
-
     function resetTimer() {
       timeRemaining = 0;
       callbacks.length = 0;
+    }
+
+    function startTimer(timeInSeconds) {
+      timeRemaining = timeInSeconds;
+      $timeout(tickFn, 1000);
     }
 
     function getTime() {

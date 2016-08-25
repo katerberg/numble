@@ -66,7 +66,7 @@
 (function () {
   'use strict';
 
-  angular.module('numbleApp').controller('GameCtrl', ["$scope", "$routeParams", "stateService", "storageService", "boardService", "timeService", "selectionService", function ($scope, $routeParams, stateService, storageService, boardService, timeService, selectionService) {
+  angular.module('numbleApp').controller('GameCtrl', ["$scope", "$routeParams", "$location", "stateService", "storageService", "boardService", "timeService", "selectionService", function ($scope, $routeParams, $location, stateService, storageService, boardService, timeService, selectionService) {
 
     function select(item) {
       var state = stateService.state;
@@ -83,6 +83,22 @@
       };
     }
 
+    timeService.resetTimer();
+    timeService.setAlert(function () {
+      if (stateService.state.score > $scope.mustBeat.score) {
+        $location.url('/new-high-score');
+      } else {
+        $location.url('/results');
+      }
+    });
+    storageService.getMonthlyHighScores().then(function (scores) {
+      if (scores.length < 5) {
+        $scope.mustBeat = { score: 0 };
+      } else {
+        $scope.mustBeat = scores[scores.length - 1];
+      }
+    });
+
     $scope.state = stateService.state;
     $scope.scoreStorage = storageService.getScore($routeParams.goal);
     $scope.scoreStorage.then(function (res) {
@@ -90,8 +106,21 @@
       $scope.goal = res ? res.score : null;
       timeService.startTimer(timeService.GAME_TIME);
     });
+    $scope.scoreStorage = storageService.getScore($routeParams.goal);
     $scope.undo = stateService.undo;
   }]);
+})();
+'use strict';
+
+(function () {
+  'use strict';
+  /* jshint ignore:start */
+
+  Date.prototype.getWeek = function () {
+    var onejan = new Date(undefined.getFullYear(), 0, 1);
+    return Math.ceil(((undefined - onejan) / 86400000 + onejan.getDay() + 1) / 7);
+  };
+  /* jshint ignore:end */
 })();
 'use strict';
 
@@ -101,6 +130,69 @@
   angular.module('numbleApp').config(["hammerDefaultOptsProvider", function (hammerDefaultOptsProvider) {
     var hammerOptions = { recognizers: [[Hammer.Tap, { time: 250 }]] };
     hammerDefaultOptsProvider.set(hammerOptions);
+  }]);
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('numbleApp').controller('HighScoreCtrl', ["$scope", "$location", "storageService", function ($scope, $location, storageService) {
+    $scope.mode = 'monthly';
+    $scope.setMode = function (mode) {
+      return $scope.mode = mode;
+    };
+    $scope.monthlyRequest = storageService.getMonthlyHighScores();
+    $scope.monthlyRequest.then(function (res) {
+      return $scope.monthlyScores = res;
+    });
+    $scope.lifetimeRequest = storageService.getLifetimeHighScores();
+    $scope.lifetimeRequest.then(function (res) {
+      return $scope.lifetimeScores = res;
+    });
+
+    function challenge(score) {
+      $location.url('/play?goal=' + score.key);
+    }
+
+    $scope.challenge = challenge;
+  }]);
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('numbleApp').directive('navButton', ["$location", function ($location) {
+    return {
+      restrict: 'E',
+      replace: true,
+      templateUrl: 'js/navButton.html',
+      transclude: true,
+      scope: {
+        navButtonUrl: '@'
+      },
+      link: function link(scope) {
+        scope.follow = function () {
+          $location.url('/' + scope.navButtonUrl);
+        };
+      }
+    };
+  }]);
+})();
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('numbleApp').controller('NewHighScoreCtrl', ["$scope", "$location", "stateService", "storageService", function ($scope, $location, stateService, storageService) {
+
+    $scope.score = stateService.state.score;
+    $scope.submit = function (callsign) {
+      storageService.submitHighScore(callsign).then(function () {
+        return $location.url('/high-scores');
+      });
+    };
   }]);
 })();
 'use strict';
@@ -155,6 +247,12 @@
     }).when('/tutorial', {
       templateUrl: 'partials/tutorial.html',
       controller: 'TutorialCtrl'
+    }).when('/new-high-score', {
+      templateUrl: 'partials/new-high-score.html',
+      controller: 'NewHighScoreCtrl'
+    }).when('/high-scores', {
+      templateUrl: 'partials/high-scores.html',
+      controller: 'HighScoreCtrl'
     }).when('/play', {
       templateUrl: 'partials/game.html',
       controller: 'GameCtrl'
@@ -291,23 +389,57 @@
   'use strict';
 
   angular.module('numbleApp').factory('storageService', ["$http", "$q", "stateService", function ($http, $q, stateService) {
-    var GAMES_URL = 'https://project-8921628173750252600.firebaseio.com/games';
+    var PROJECT_URL = 'https://project-8921628173750252600.firebaseio.com',
+        GAMES_URL = PROJECT_URL + '/games',
+        MONTHLY_SCORES_URL = PROJECT_URL + '/high-scores/monthly/' + new Date().getFullYear() + '-' + new Date().getMonth(),
+        LIFETIME_SCORES_URL = PROJECT_URL + '/high-scores/lifetime';
 
-    function storeScore() {
+    function buildStorage(callsign) {
       var displayVals = stateService.state.board.reduce(function (prevArr, arr) {
         return prevArr + arr.reduce(function (prevItem, item) {
           return prevItem + item.display + ',';
         }, '');
       }, '');
-      var storage = {
+      return {
+        callsign: callsign,
         score: stateService.state.score,
         values: displayVals.substring(0, displayVals.length - 1),
         date: new Date() + '',
         mode: stateService.state.mode
       };
-      return $http.post(GAMES_URL + '.json', storage).then(function (res) {
+    }
+
+    function storeScore() {
+      return $http.post(GAMES_URL + '.json', buildStorage()).then(function (res) {
         return res.data;
       });
+    }
+
+    function getTopFiveScores(res) {
+      if (!res.data) {
+        return [];
+      }
+      return Object.keys(res.data).map(function (key) {
+        res.data[key].key = key;
+        return res.data[key];
+      }).sort(function (a, b) {
+        return b.score - a.score;
+      }).slice(0, 5);
+    }
+
+    function getMonthlyHighScores() {
+      return $http.get(MONTHLY_SCORES_URL + '.json').then(getTopFiveScores);
+    }
+
+    function getLifetimeHighScores() {
+      return $http.get(LIFETIME_SCORES_URL + '.json').then(getTopFiveScores);
+    }
+
+    function submitHighScore(callsign) {
+      var lifetime = $http.post(LIFETIME_SCORES_URL + '.json', buildStorage(callsign));
+      var monthly = $http.post(MONTHLY_SCORES_URL + '.json', buildStorage(callsign));
+
+      return $q.all([lifetime, monthly]);
     }
 
     function getScore(key) {
@@ -322,6 +454,9 @@
 
     return {
       getScore: getScore,
+      getMonthlyHighScores: getMonthlyHighScores,
+      getLifetimeHighScores: getLifetimeHighScores,
+      submitHighScore: submitHighScore,
       storeScore: storeScore
     };
   }]);
@@ -346,14 +481,14 @@
       }
     }
 
-    function startTimer(timeInSeconds) {
-      timeRemaining = timeInSeconds;
-      $timeout(tickFn, 1000);
-    }
-
     function resetTimer() {
       timeRemaining = 0;
       callbacks.length = 0;
+    }
+
+    function startTimer(timeInSeconds) {
+      timeRemaining = timeInSeconds;
+      $timeout(tickFn, 1000);
     }
 
     function getTime() {
@@ -383,17 +518,13 @@
 (function () {
   'use strict';
 
-  angular.module('numbleApp').directive('numTimer', ["timeService", "$location", function (timeService, $location) {
+  angular.module('numbleApp').directive('numTimer', ["timeService", function (timeService) {
     return {
       restrict: 'E',
       templateUrl: 'templates/timer.html',
       scope: {},
       link: function link($scope) {
         var GAME_TIME = timeService.GAME_TIME;
-
-        timeService.setAlert(function () {
-          $location.url('/results');
-        });
 
         $scope.timePercentage = function () {
           return 100 * (timeService.getTime() - 1) / GAME_TIME;

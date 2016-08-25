@@ -2,6 +2,7 @@
   <h1>{{score}} point<span ng-if="score !== 1">s</span></h1>
   <button ng-click="startOver()">Play Again</button>
   <button ng-click="changeGameMode()">Change Game Mode</button>
+  <nav-button nav-button-url="high-scores">High Scores</nav-button>
   <button ng-if="!shareVisible" ng-click="getShare()">Challenge a Friend</button>
   <button ng-if="shareVisible && storage.$$state.status === 2" ng-click="getShare()">There was a problem. Try Again?</button>
   <i ng-if="shareVisible && storage.$$state.status === 0" class="challenge-loader fa fa-spinner fa-spin"></i>

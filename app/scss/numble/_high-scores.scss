@@ -1,0 +1,90 @@
+#high-scores {
+  background-color: $high-scores-background-color;
+  
+  h1 {
+    color: $high-scores-header-fg;
+  }
+
+  h2 {
+    color: $high-scores-header-fg;
+    font-size: 1.6em;
+    font-weight: 200;
+    &.selector {
+      display: inline-block;
+      width: 50%;
+      text-align: center;
+      &:hover {
+        cursor: pointer;
+      }
+      &.active {
+        border-bottom: 1px solid $high-scores-header-fg;
+        font-weight: 700;
+      }
+    }
+  }
+
+  ul,li {
+    color: $high-scores-header-fg;
+    font-weight: 100;
+    line-height: 1.6em;
+    text-align: left;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    font-size: 1.2em;
+  }
+
+  input {
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    display: block;
+    padding: 6px 12px;
+    font-size: 1.5em;
+    width: calc(100% - 26px);
+    &.ng-invalid:not(.ng-pristine) {
+      border: 1px solid red;
+    }
+  }
+
+  button {
+    margin-top: 16px;
+    border: 1px solid $high-scores-button-border;
+    background-color: darken($high-scores-button-bg, 10%);
+    color: $high-scores-button-fg;
+    &.challenge {
+      padding: 8px;
+      margin-top: 0;
+      font-size: 0.6em;
+      display: inline-block;
+      width: auto;
+      vertical-align: middle;
+      border-radius: 4px;
+      float: right;
+    }
+    &:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
+    &:hover:not([disabled]) {
+      border: 1px solid $high-scores-button-border-hover;
+      background-color: $high-scores-button-bg-hover;
+      color: $high-scores-button-fg-hover;
+      cursor: pointer;
+    }
+  }
+}
+@media screen and (min-width: $breakpoint-min-width) {
+  #high-scores {
+    ul,li {
+      text-align: center;
+      font-size: 1.5em;
+    }
+    button.challenge {
+      margin-left: 20px;
+      float: none;
+    }
+  }
+}
