@@ -41,6 +41,7 @@
       }
     });
 
+    stateService.resetGame();
     $scope.state = stateService.state;
     $scope.scoreStorage = storageService.getScore($routeParams.goal);
     $scope.scoreStorage.then(function(res) {

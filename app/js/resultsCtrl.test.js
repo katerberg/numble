@@ -81,7 +81,6 @@ describe('ResultsCtrl', () => {
 
     describe('#changeGameMode()', () => {
       beforeEach(() => {
-        spyOn(stateService, 'resetGame');
         spyOn($location, 'url');
       });
 
@@ -90,17 +89,10 @@ describe('ResultsCtrl', () => {
 
         expect($location.url).toHaveBeenCalledWith('/');
       });
-
-      it('resets state', () => {
-        $scope.changeGameMode();
-
-        expect(stateService.resetGame).toHaveBeenCalled();
-      });
     });
 
     describe('#startOver()', () => {
       beforeEach(() => {
-        spyOn(stateService, 'resetGame');
         spyOn($location, 'url');
       });
 
@@ -108,12 +100,6 @@ describe('ResultsCtrl', () => {
         $scope.startOver();
 
         expect($location.url).toHaveBeenCalledWith('/play');
-      });
-
-      it('resets state', () => {
-        $scope.startOver();
-
-        expect(stateService.resetGame).toHaveBeenCalled();
       });
     });
 

@@ -14,12 +14,10 @@
     }
 
     function startOver() {
-      stateService.resetGame();
       $location.url('/play');
     }
 
     function changeGameMode() {
-      stateService.resetGame();
       $location.url('/');
     }
 

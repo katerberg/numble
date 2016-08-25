@@ -99,6 +99,7 @@
       }
     });
 
+    stateService.resetGame();
     $scope.state = stateService.state;
     $scope.scoreStorage = storageService.getScore($routeParams.goal);
     $scope.scoreStorage.then(function (res) {
@@ -210,12 +211,10 @@
     }
 
     function startOver() {
-      stateService.resetGame();
       $location.url('/play');
     }
 
     function changeGameMode() {
-      stateService.resetGame();
       $location.url('/');
     }
 
