@@ -15,7 +15,8 @@
   </ul>
   <ul ng-if="mode === 'lifetime'">
     <li ng-repeat="score in lifetimeScores | limitTo:5">
-      {{score.callsign || 'Secret Snake'}} - {{score.score}}
+      <span>{{score.callsign || 'Secret Snake'}} - {{score.score}}</span>
+      <button class="challenge" ng-click="challenge(score)">Challenge</button>
     </li>
   </ul>
   <nav-button>Home</nav-button>
