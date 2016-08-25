@@ -31,7 +31,10 @@
         return [];
       }
       return Object.keys(res.data)
-        .map(key => res.data[key])
+        .map(key => {
+          res.data[key].key = key;
+          return res.data[key];
+        })
         .sort((a, b) => b.score - a.score)
         .slice(0,5);
     }

@@ -25,6 +25,7 @@
       };
     }
 
+    timeService.resetTimer();
     timeService.setAlert(() => {
       if (stateService.state.score > $scope.mustBeat.score) {
         $location.url('/new-high-score');

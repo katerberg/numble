@@ -83,6 +83,7 @@
       };
     }
 
+    timeService.resetTimer();
     timeService.setAlert(function () {
       if (stateService.state.score > $scope.mustBeat.score) {
         $location.url('/new-high-score');
@@ -136,7 +137,7 @@
 (function () {
   'use strict';
 
-  angular.module('numbleApp').controller('HighScoreCtrl', ["$scope", "storageService", function ($scope, storageService) {
+  angular.module('numbleApp').controller('HighScoreCtrl', ["$scope", "$location", "storageService", function ($scope, $location, storageService) {
     $scope.mode = 'monthly';
     $scope.setMode = function (mode) {
       return $scope.mode = mode;
@@ -149,6 +150,12 @@
     $scope.lifetimeRequest.then(function (res) {
       return $scope.lifetimeScores = res;
     });
+
+    function challenge(score) {
+      $location.url('/play?goal=' + score.key);
+    }
+
+    $scope.challenge = challenge;
   }]);
 })();
 'use strict';
@@ -413,6 +420,7 @@
         return [];
       }
       return Object.keys(res.data).map(function (key) {
+        res.data[key].key = key;
         return res.data[key];
       }).sort(function (a, b) {
         return b.score - a.score;
@@ -473,14 +481,14 @@
       }
     }
 
-    function startTimer(timeInSeconds) {
-      timeRemaining = timeInSeconds;
-      $timeout(tickFn, 1000);
-    }
-
     function resetTimer() {
       timeRemaining = 0;
       callbacks.length = 0;
+    }
+
+    function startTimer(timeInSeconds) {
+      timeRemaining = timeInSeconds;
+      $timeout(tickFn, 1000);
     }
 
     function getTime() {

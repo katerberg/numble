@@ -92,8 +92,22 @@ describe('storageService', () => {
         done();
       });
 
-      expect($http.get)
-        .toHaveBeenCalledWith(`https://project-8921628173750252600.firebaseio.com/high-scores/monthly/${month}.json`);
+      deferred.resolve({data: data});
+      $rootScope.$apply();
+    });
+
+    it('stores keys', done =>  {
+      const key = Math.random() + '',
+        input0 = {score: 87},
+        data = {},
+        deferred = $q.defer();
+      data[key] = input0;
+      spyOn($http, 'get').and.returnValue(deferred.promise);
+      instance.getMonthlyHighScores().then(val => {
+        expect(val[0].key).toBe(key);
+        done();
+      });
+
       deferred.resolve({data: data});
       $rootScope.$apply();
     });
@@ -166,8 +180,22 @@ describe('storageService', () => {
         done();
       });
 
-      expect($http.get)
-        .toHaveBeenCalledWith('https://project-8921628173750252600.firebaseio.com/high-scores/lifetime.json');
+      deferred.resolve({data: data});
+      $rootScope.$apply();
+    });
+
+    it('stores keys', done =>  {
+      const key = Math.random() + '',
+        input0 = {score: 87},
+        data = {},
+        deferred = $q.defer();
+      data[key] = input0;
+      spyOn($http, 'get').and.returnValue(deferred.promise);
+      instance.getLifetimeHighScores().then(val => {
+        expect(val[0].key).toBe(key);
+        done();
+      });
+
       deferred.resolve({data: data});
       $rootScope.$apply();
     });
