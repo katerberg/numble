@@ -36,6 +36,12 @@ gulp.task('fonts', function() {
         .pipe(gulp.dest('dist/fonts'));
 });
 
+// Move images
+gulp.task('images', function() {
+    return gulp.src(`${basedir}images/**/*`)
+        .pipe(gulp.dest('dist/images'));
+});
+
 // Compile Our Sass
 gulp.task('sass', function() {
     return gulp.src(basedir + 'scss/**/*.scss')
@@ -96,7 +102,7 @@ gulp.task('watch', function() {
 });
 
 // Build task
-gulp.task('build', ['lint', 'sass', 'dependentCss', 'fonts', 'dependentJs', 'scripts', 'html', 'static']);
+gulp.task('build', ['lint', 'images', 'sass', 'dependentCss', 'fonts', 'dependentJs', 'scripts', 'html', 'static']);
 
 // Default Task
 gulp.task('default', ['build', 'watch']);
